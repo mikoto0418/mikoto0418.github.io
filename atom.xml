@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>程霜的Blog</title>
+  
+  <subtitle>效鹣鹣永远成双</subtitle>
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2024-12-22T13:03:37.132Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>John Doe</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hello World！</title>
+    <link href="http://example.com/posts/1.html"/>
+    <id>http://example.com/posts/1.html</id>
+    <published>2024-12-22T11:04:23.000Z</published>
+    <updated>2024-12-22T13:03:37.132Z</updated>
+    
+    <content type="html"><![CDATA[<p>在Stellar主题下的第一篇博客。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;在Stellar主题下的第一篇博客。&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    <category term="杂谈" scheme="http://example.com/categories/%E6%9D%82%E8%B0%88/"/>
+    
+    
+    <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
+    
+  </entry>
+  
+</feed>
