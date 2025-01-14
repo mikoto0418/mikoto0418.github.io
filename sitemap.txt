@@ -1,0 +1,8 @@
+http://example.com/posts/1.html
+http://example.com/wiki/niuke/%E7%89%9B%E5%AE%A2%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E5%89%8D%E7%AB%AF.html
+http://example.com/explore/sites/%E5%B7%A5%E5%85%B7%E5%BA%93.html
+http://example.com/explore/notes/%E6%8E%A2%E7%B4%A2%E8%80%85%E7%AC%94%E8%AE%B0.html
+http://example.com/about/index.html
+http://example.com/
+http://example.com/tags/%E6%97%A5%E5%B8%B8/
+http://example.com/categories/%E6%9D%82%E8%B0%88/
