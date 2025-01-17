@@ -1,3 +1,16 @@
+http://example.com/posts/Django.html
+http://example.com/posts/MySQL.html
+http://example.com/posts/C%E8%AF%AD%E8%A8%80.html
+http://example.com/posts/%E6%8E%92%E5%BA%8F.html
+http://example.com/posts/%E9%BB%91%E9%A9%ACpink%E8%AE%B2%E5%89%8D%E7%AB%AF%20html.html
+http://example.com/posts/%E9%BB%91%E9%A9%ACpink%20CSS.html
+http://example.com/posts/%E9%BB%91%E9%A9%ACpink%20JS.html
+http://example.com/posts/%E9%BB%91%E9%A9%ACVUE.html
+http://example.com/posts/%E6%89%AB%E7%9B%B2.html
+http://example.com/posts/%E8%93%9D%E6%A1%A5%E6%A8%A1%E6%8B%9F%E9%A2%98.html
+http://example.com/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html
+http://example.com/posts/%E5%89%8D%E7%AB%AF.html
+http://example.com/posts/PTA%E9%A2%98.html
 http://example.com/posts/1.html
 http://example.com/wiki/niuke/%E7%89%9B%E5%AE%A2%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E5%89%8D%E7%AB%AF.html
 http://example.com/explore/sites/%E5%B7%A5%E5%85%B7%E5%BA%93.html

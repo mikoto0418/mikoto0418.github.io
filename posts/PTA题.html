@@ -17,14 +17,18 @@
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
   
-  <title>程霜的Blog</title>
+  <title>PTA题 - 程霜的Blog</title>
 
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="程霜的Blog">
-<meta property="og:url" content="http://example.com/index.html">
+    <meta name="description" content="斐波那契数列 12345678910111213def feibo(n):    fib &#x3D; [1,1]    if n&lt;&#x3D;0:        return []    if n&#x3D;&#x3D;1:        return [1]    while len(fib)&lt;n:        fib.append(fib[-1]+fib[-2])    return fibn&#x3D;int(input()">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PTA题">
+<meta property="og:url" content="http://example.com/posts/PTA%E9%A2%98.html">
 <meta property="og:site_name" content="程霜的Blog">
+<meta property="og:description" content="斐波那契数列 12345678910111213def feibo(n):    fib &#x3D; [1,1]    if n&lt;&#x3D;0:        return []    if n&#x3D;&#x3D;1:        return [1]    while len(fib)&lt;n:        fib.append(fib[-1]+fib[-2])    return fibn&#x3D;int(input()">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-01-13T19:09:27.000Z">
+<meta property="article:modified_time" content="2025-01-13T19:09:27.107Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="hexo-theme-stellar,刷题,项目">
 <meta name="twitter:card" content="summary">
@@ -76,7 +80,7 @@
   <!-- hexo injector head_end end --></head>
 <body>
 
-<div class="l_body s:aa index tech" id="start" layout="undefined" ><aside class="l_left"><div class="leftbar-container">
+<div class="l_body s:aa content tech" id="start" layout="post" ><aside class="l_left"><div class="leftbar-container">
 
 
 <header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://cdn.jsdelivr.net/gh/mikoto0418/blogpicture@main/b_d4d20e3f558c0195f0367429c9b4e9c9.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">程霜的Blog</div><div class="sub cap">效鹣鹣永远成双</div></a></div></header>
@@ -88,113 +92,255 @@
 <nav class="menu dis-select"><a class="nav-item active" title="首页" href="/" style="color:#1BCDFC"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.879 2.879C5 3.757 5 5.172 5 8v8c0 2.828 0 4.243.879 5.121C6.757 22 8.172 22 11 22h2c2.828 0 4.243 0 5.121-.879C19 20.243 19 18.828 19 16V8c0-2.828 0-4.243-.879-5.121C17.243 2 15.828 2 13 2h-2c-2.828 0-4.243 0-5.121.879M8.25 17a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75M9 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zM8.25 9A.75.75 0 0 1 9 8.25h6a.75.75 0 0 1 0 1.5H9A.75.75 0 0 1 8.25 9" clip-rule="evenodd"/><path fill="currentColor" d="M5.235 4.058C5 4.941 5 6.177 5 8v8c0 1.823 0 3.058.235 3.942L5 19.924c-.975-.096-1.631-.313-2.121-.803C2 18.243 2 16.828 2 14v-4c0-2.829 0-4.243.879-5.121c.49-.49 1.146-.707 2.121-.803zm13.53 15.884C19 19.058 19 17.822 19 16V8c0-1.823 0-3.059-.235-3.942l.235.018c.975.096 1.631.313 2.121.803C22 5.757 22 7.17 22 9.999v4c0 2.83 0 4.243-.879 5.122c-.49.49-1.146.707-2.121.803z" opacity=".5"/></svg></a><a class="nav-item" title="文档" href="/wiki/" style="color:#3DC550"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M14.25 4.48v3.057c0 .111 0 .27.02.406a.936.936 0 0 0 .445.683a.96.96 0 0 0 .783.072c.13-.04.272-.108.378-.159L17 8.005l1.124.534c.106.05.248.119.378.16a.958.958 0 0 0 .783-.073a.936.936 0 0 0 .444-.683c.021-.136.021-.295.021-.406V3.031c.113-.005.224-.01.332-.013C21.154 2.98 22 3.86 22 4.933v11.21c0 1.112-.906 2.01-2.015 2.08c-.97.06-2.108.179-2.985.41c-1.082.286-1.99 1.068-3.373 1.436c-.626.167-1.324.257-1.627.323V5.174c.32-.079 1.382-.203 1.674-.371c.184-.107.377-.216.576-.323m5.478 8.338a.75.75 0 0 1-.546.91l-4 1a.75.75 0 0 1-.364-1.456l4-1a.75.75 0 0 1 .91.546" clip-rule="evenodd"/><path fill="currentColor" d="M18.25 3.151c-.62.073-1.23.18-1.75.336a8.2 8.2 0 0 0-.75.27v3.182l.75-.356l.008-.005a1.13 1.13 0 0 1 .492-.13c.047 0 .094.004.138.01c.175.029.315.1.354.12l.009.005l.749.356V3.647z"/><path fill="currentColor" d="M12 5.214c-.334-.064-1.057-.161-1.718-.339C8.938 4.515 8.05 3.765 7 3.487c-.887-.234-2.041-.352-3.018-.412C2.886 3.007 2 3.9 2 4.998v11.146c0 1.11.906 2.01 2.015 2.079c.97.06 2.108.179 2.985.41c.486.129 1.216.431 1.873.726c1.005.451 2.052.797 3.127 1.034z" opacity=".5"/><path fill="currentColor" d="M4.273 12.818a.75.75 0 0 1 .91-.545l4 1a.75.75 0 1 1-.365 1.455l-4-1a.75.75 0 0 1-.545-.91m.909-4.545a.75.75 0 1 0-.364 1.455l4 1a.75.75 0 0 0 .364-1.455z"/></svg></a><a class="nav-item" title="探索" href="/explore/sites/%E5%B7%A5%E5%85%B7%E5%BA%93.html" style="color:#FA6400"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M20 12a8 8 0 1 1-16 0a8 8 0 0 1 16 0" opacity=".5"/><path fill="currentColor" d="M17.712 5.453c1.047-.193 2.006-.259 2.797-.152c.77.103 1.536.393 1.956 1.064c.446.714.312 1.542-.012 2.258c-.33.728-.918 1.499-1.672 2.268c-1.516 1.547-3.836 3.226-6.597 4.697c-2.763 1.472-5.495 2.484-7.694 2.92c-1.095.217-2.098.299-2.923.201c-.8-.095-1.6-.383-2.032-1.075c-.47-.752-.296-1.63.07-2.379c.375-.768 1.032-1.586 1.872-2.403L4 12.416c0 .219.083.71.168 1.146c.045.23.09.444.123.596c-.652.666-1.098 1.263-1.339 1.756c-.277.567-.208.825-.145.925c.072.116.305.305.937.38c.609.073 1.44.018 2.455-.183c2.02-.4 4.613-1.351 7.28-2.772c2.667-1.42 4.85-3.015 6.23-4.423c.694-.707 1.15-1.334 1.377-1.836c.233-.515.167-.75.107-.844c-.07-.112-.289-.294-.883-.374c-.542-.072-1.272-.041-2.163.112L16.87 5.656c.338-.101.658-.17.842-.203"/></svg></a></nav>
 </div>
 <div class="widgets">
-<widget class="widget-wrapper markdown"><div class="widget-header dis-select"><span class="name">在这停顿！</span></div><div class="widget-body fs14"><p>这里是 程霜528 的个人分享喵！谢谢你来看我喵！</p>
-</div></widget>
 
-<widget class="widget-wrapper markdown"><div class="widget-header dis-select"><span class="name">垃圾箱</span></div><div class="widget-body fs14"><p>人们抵达圣洁的门扉，<br>至此，方能醒悟。<br>通往地狱之旅经由善心铺就。</p>
-</div></widget>
+
+
 
 <widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span><a class="cap-action" id="rss" title="Subscribe" href="/atom.xml"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M5 21q-.825 0-1.412-.587T3 19q0-.825.588-1.412T5 17q.825 0 1.413.588T7 19q0 .825-.587 1.413T5 21m13.5 0q-.65 0-1.088-.475T16.9 19.4q-.275-2.425-1.312-4.537T12.9 11.1q-1.65-1.65-3.762-2.687T4.6 7.1q-.65-.075-1.125-.512T3 5.5q0-.65.45-1.062t1.075-.363q3.075.275 5.763 1.563t4.737 3.337q2.05 2.05 3.338 4.738t1.562 5.762q.05.625-.363 1.075T18.5 21m-6 0q-.625 0-1.075-.437T10.85 19.5q-.225-1.225-.787-2.262T8.65 15.35q-.85-.85-1.888-1.412T4.5 13.15q-.625-.125-1.062-.575T3 11.5q0-.65.45-1.075t1.075-.325q1.825.25 3.413 1.063t2.837 2.062q1.25 1.25 2.063 2.838t1.062 3.412q.1.625-.325 1.075T12.5 21"/></svg></a></div><div class="widget-body fs14"><a class="item title" href="/posts/Django.html"><span class="title">Django</span></a><a class="item title" href="/posts/MySQL.html"><span class="title">MySQL</span></a><a class="item title" href="/posts/C%E8%AF%AD%E8%A8%80.html"><span class="title">C语言</span></a><a class="item title" href="/posts/%E6%8E%92%E5%BA%8F.html"><span class="title">排序</span></a><a class="item title" href="/posts/%E9%BB%91%E9%A9%ACpink%E8%AE%B2%E5%89%8D%E7%AB%AF%20html.html"><span class="title">黑马pink讲前端 html</span></a></div></widget>
 </div>
 <footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/mikoto0418/" target="_blank" rel="external nofollow noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="#000000" d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5c.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34c-.46-1.16-1.11-1.47-1.11-1.47c-.91-.62.07-.6.07-.6c1 .07 1.53 1.03 1.53 1.03c.87 1.52 2.34 1.07 2.91.83c.09-.65.35-1.09.63-1.34c-2.22-.25-4.55-1.11-4.55-4.92c0-1.11.38-2 1.03-2.71c-.1-.25-.45-1.29.1-2.64c0 0 .84-.27 2.75 1.02c.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02c.55 1.35.2 2.39.1 2.64c.65.71 1.03 1.6 1.03 2.71c0 3.82-2.34 4.66-4.57 4.91c.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"/></svg></a><a class="social" href="https://space.bilibili.com/572185830" target="_blank" rel="external nofollow noopener noreferrer"><svg t="1734864597018" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1740" width="200" height="200"><path d="M278.8864 148.1728c14.336-8.192 32.6144-9.3696 47.8208-2.6624 11.3664 4.6592 19.968 13.824 29.184 21.6064 38.144 32.9216 75.9808 66.304 114.2784 99.0208h80.4352c38.2976-32.768 76.0832-66.048 114.2272-98.9696 9.2672-7.7824 17.8688-16.896 29.2864-21.6576 14.7456-6.5024 32.4608-5.632 46.592 2.048 16.5888 8.5504 28.1088 26.2656 28.8256 44.9536 1.024 13.568-3.84 27.2896-12.3392 37.7856-7.5264 8.3456-16.5376 15.2064-24.8832 22.6816-5.3248 4.4032-10.1376 9.5232-16.0256 13.2096 23.6544 0 47.2576-0.256 70.912 0.1536 31.1296 0.8192 61.44 14.592 82.8928 37.1712 22.6304 22.2208 35.5328 53.5552 35.4816 85.1968 0.1024 108.4416 0 216.9344 0.0512 325.376-0.1024 16.384 0.8192 33.024-2.816 49.152-6.656 32.9728-28.8256 61.5936-56.9856 79.36a121.344 121.344 0 0 1-64.7168 17.7664H263.2704c-16.9984-0.1024-34.2528 0.8704-50.9952-2.8672-32.1024-6.4512-60.0064-27.648-77.824-54.6304a121.088 121.088 0 0 1-19.2512-66.9696v-321.536c0.1024-16.5376-0.9216-33.1776 2.4576-49.408 10.24-52.9408 58.9312-96.1024 112.9984-98.4576 24.6272-0.768 49.3056-0.2048 73.9328-0.3072-11.6224-8.3968-21.8112-18.5344-32.768-27.7504a55.04 55.04 0 0 1-20.5312-45.9264c0.7168-18.2272 11.6736-35.584 27.648-44.3392m-13.056 221.7984c-20.992 3.7376-38.912 20.3264-44.7488 40.7552a76.4928 76.4928 0 0 0-2.3552 21.7088c0.1024 89.0368-0.0512 178.0736 0.0512 267.1616-0.4096 24.2176 16.3328 47.1552 39.1168 54.8864 8.1408 2.9696 16.896 3.0208 25.3952 3.072 153.1904-0.1024 306.432 0.0512 459.6224-0.0512 22.4768 0.8704 44.0832-13.1072 53.5552-33.28 5.7856-11.5712 5.6832-24.7296 5.4784-37.376v-248.832c0-9.1136 0.3072-18.4832-2.304-27.2896a58.7776 58.7776 0 0 0-36.864-38.656c-9.7792-3.584-20.4288-3.0208-30.6688-3.072H292.5056c-8.8576 0-17.8176-0.3072-26.624 0.9728z" fill="#2c2c2c" p-id="1741"></path><path d="M358.7072 455.5264c14.6432-1.4848 29.8496 3.2768 41.0112 12.8 12.4416 10.24 19.5584 26.112 19.7632 42.1376 0.3584 19.4048 0.1024 38.8608 0.1024 58.2656 0 12.8-3.3792 25.8048-11.3152 35.9424a54.9888 54.9888 0 0 1-48.4864 21.76 54.9376 54.9376 0 0 1-44.032-28.2624c-6.8096-11.6736-7.3728-25.4976-7.168-38.6048 0.4096-18.8416-1.024-37.7856 0.8704-56.576a55.296 55.296 0 0 1 49.2544-47.4624z m292.4544 0a55.2448 55.2448 0 0 1 60.7232 53.0432c0.8192 18.2272 0.1024 36.4544 0.4096 54.6816 0.1024 12.8-1.4336 26.112-8.4992 37.12-10.24 17.0496-30.3104 27.5456-50.176 26.112a55.04 55.04 0 0 1-43.3664-24.9856c-7.936-11.776-9.472-26.2656-9.1136-40.0896 0.3584-18.7392-0.6656-37.4784 0.6144-56.1664 1.8432-25.6 23.9104-47.5136 49.408-49.664z" fill="#2c2c2c" p-id="1742"></path></svg></a><a class="social" href="javaScript:switchTheme();" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256"><path fill="#000000" d="M233.54 142.23a8 8 0 0 0-8-2a88.08 88.08 0 0 1-109.8-109.8a8 8 0 0 0-10-10a104.84 104.84 0 0 0-52.91 37A104 104 0 0 0 136 224a103.1 103.1 0 0 0 62.52-20.88a104.84 104.84 0 0 0 37-52.91a8 8 0 0 0-1.98-7.98m-44.64 48.11A88 88 0 0 1 65.66 67.11a89 89 0 0 1 31.4-26A106 106 0 0 0 96 56a104.11 104.11 0 0 0 104 104a106 106 0 0 0 14.92-1.06a89 89 0 0 1-26.02 31.4"/></svg></a><a class="social" href="javaScript:toggleSnow();" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m21 14.25l-.831-.659c-.946-.75-1.419-1.125-1.419-1.591s.473-.841 1.419-1.591L21 9.75m-18 0l.831.659c.946.75 1.419 1.125 1.419 1.591s-.473.841-1.419 1.591L3 14.25M14.572 21l.156-1.059c.178-1.205.267-1.807.674-2.042c.407-.236.972-.011 2.104.437l.994.394M9.428 3l-.156 1.059c-.178 1.205-.267 1.807-.674 2.042c-.407.236-.972.011-2.104-.437L5.5 5.27M5 18.732l1.07-.395c1.218-.448 1.827-.672 2.265-.438s.533.838.724 2.042L9.227 21M19 5.268l-1.07.394c-1.218.45-1.828.673-2.265.439s-.533-.838-.724-2.042L14.773 3M19 12H5m10.5 6l-7-12m7 0l-7 12" color="#000000"/></svg></a></div></footer>
 </div></aside><div class="l_main" id="main">
 
-<header class="header mobile-only"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://cdn.jsdelivr.net/gh/mikoto0418/blogpicture@main/b_d4d20e3f558c0195f0367429c9b4e9c9.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">程霜的Blog</div><div class="sub cap">效鹣鹣永远成双</div></a></div></header>
 
 
 
 
-<div class="navbar top"><nav class="post"><a class="active" href="/">近期发布</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archives/">归档</a></nav></div>
-<div class="post-list post"><a class="post-card post" href="/posts/Django.html">
-<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?"/></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2025-01-15T11:59:03.000Z">2025-01-15 </time><span class="post-count">&nbsp;6 字</span></span></div><h2 class="post-title">Django</h2><div class="excerpt"><p>1pip install django
-
-安装Django 
-</p></div><div class="meta cap"></div></article>
-
-</a><a class="post-card post" href="/posts/MySQL.html">
-<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?"/></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2025-01-15T11:59:02.000Z">2025-01-15 </time><span class="post-count">&nbsp;16 字</span></span></div><h2 class="post-title">MySQL</h2><div class="excerpt"><p>
-
-
-
-如果不存在则创建
-
-
-
-varchar(位数)   50位字符串
-
-
-</p></div><div class="meta cap"></div></article>
-
-</a><a class="post-card post" href="/posts/C%E8%AF%AD%E8%A8%80.html">
-<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?"/></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2025-01-15T11:58:42.000Z">2025-01-15 </time><span class="post-count">&nbsp;1.4k 字</span></span></div><h2 class="post-title">C语言</h2><div class="excerpt"><p>%d 十进制整数
-scanf&#x2F;scanf_s 读取键盘输入
-double x 定义双精度变量x
-%.5f表示输出一个双精度浮点数，保留 5 位小数%lf 双精度浮点数int（整型%d）...</p></div><div class="meta cap"></div></article>
-
-</a><a class="post-card post" href="/posts/%E6%8E%92%E5%BA%8F.html">
-<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?"/></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2025-01-14T04:00:59.000Z">2025-01-14 </time><span class="post-count">&nbsp;331 字</span></span></div><h2 class="post-title">排序</h2><div class="excerpt"><p>冒泡排序每一个字符与后一个字符比较，互换，交换数字为0时则所有数均有序，排序结束，交换次数为n-1
-直接插入排序把每一次进行比较的数拿出来与前一个有序数字进行比较，出现小于则放到该数后一位（j+...</p></div><div class="meta cap"></div></article>
-
-</a><a class="post-card post" href="/posts/%E9%BB%91%E9%A9%ACpink%E8%AE%B2%E5%89%8D%E7%AB%AF%20html.html">
-<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?"/></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2025-01-14T04:00:58.000Z">2025-01-14 </time><span class="post-count">&nbsp;481 字</span></span></div><h2 class="post-title">黑马pink讲前端 html</h2><div class="excerpt"><p>标题 
-h1到h6 字号加大字体加粗 重要程度1到6递减 标题独占一行
-段落
-
-强制换行 否则会按照浏览器大小换行
-div一行一个 span一行可以多个
-
-src是必要的 其他属性是选择性的
-格...</p></div><div class="meta cap"></div></article>
-
-</a><a class="post-card post" href="/posts/%E9%BB%91%E9%A9%ACpink%20CSS.html">
-<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?"/></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2025-01-14T04:00:55.000Z">2025-01-14 </time><span class="post-count">&nbsp;582 字</span></span></div><h2 class="post-title">黑马pink CSS</h2><div class="excerpt"><p>CSS选择器
-1.元素选择器（标签选择器）
-
-只能选择全部标签
-
-写在body之前（之间）写在之间p {
-  color: red;
-
-
-}
-111111
-
-效果就是111111变红
-选择了所有...</p></div><div class="meta cap"></div></article>
-
-</a><a class="post-card post" href="/posts/%E9%BB%91%E9%A9%ACpink%20JS.html">
-<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?"/></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2025-01-14T04:00:53.000Z">2025-01-14 </time><span class="post-count">&nbsp;580 字</span></span></div><h2 class="post-title">黑马pink JS</h2><div class="excerpt"><p>
-外部引入js：&lt;script src&#x3D;” “&gt; 双标签 里面不能再写内容
-&#x2F;&#x2F; 单行注释
-&#x2F;* 多行注释多行注释 *&#x2F;
-
-var ...</p></div><div class="meta cap"></div></article>
-
-</a><a class="post-card post" href="/posts/%E9%BB%91%E9%A9%ACVUE.html">
-<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?"/></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2025-01-14T04:00:49.000Z">2025-01-14 </time><span class="post-count">&nbsp;536 字</span></span></div><h2 class="post-title">黑马VUE</h2><div class="excerpt"><p>VUE是用于构建用户页面的渐进式框架
-用this代替当前const变量名 指向当前实例
-参数位置补形参
-v-for&#x3D;”(item,index) in list”
-list&#x3D;[...</p></div><div class="meta cap"></div></article>
-
-</a><a class="post-card post" href="/posts/%E6%89%AB%E7%9B%B2.html">
-<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?"/></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2025-01-14T04:00:46.000Z">2025-01-14 </time><span class="post-count">&nbsp;1.2k 字</span></span></div><h2 class="post-title">扫盲</h2><div class="excerpt"><p>sep&#x3D;’分隔符’ end&#x3D;’结尾符’
-type（a)  ⇒a的类型 &lt;class ‘类型’&gt;
-input输入的都是字符串 int()转化成整数
-**次方 **0...</p></div><div class="meta cap"></div></article>
-
-</a><a class="post-card post" href="/posts/%E8%93%9D%E6%A1%A5%E6%A8%A1%E6%8B%9F%E9%A2%98.html">
-<article class="md-text"><div class="post-cover"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://source.unsplash.com/1280x640/?"/></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2025-01-14T04:00:39.000Z">2025-01-14 </time><span class="post-count">&nbsp;124 字</span></span></div><h2 class="post-title">蓝桥模拟题</h2><div class="excerpt"><p>
-
-
-对于两个整数 a, b，既是 a 的整数倍又是 b 的整数倍的数称为 a 和 b 的公倍数。公倍数中最小的正整数称为 a 和 b 的最小公倍数。
-请问， 2024 和 1024 的最小公倍...</p></div><div class="meta cap"></div></article>
-
-</a></div>
-
-  <div class='paginator-wrap dis-select'>
-  <span class="extend prev" rel="prev"></span><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"></a>
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-01-13T19:09:27.000Z">2025-01-14</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-01-13T19:09:27.107Z">2025-01-14</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>PTA题</span></h1>
+        
+      </div>
+    </div>
+    
   </div>
+  </div><article class="md-text content"><p>斐波那契数列</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">feibo</span>(<span class="hljs-params">n</span>):<br>    fib = [<span class="hljs-number">1</span>,<span class="hljs-number">1</span>]<br>    <span class="hljs-keyword">if</span> n&lt;=<span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span> []<br>    <span class="hljs-keyword">if</span> n==<span class="hljs-number">1</span>:<br>        <span class="hljs-keyword">return</span> [<span class="hljs-number">1</span>]<br>    <span class="hljs-keyword">while</span> <span class="hljs-built_in">len</span>(fib)&lt;n:<br>        fib.append(fib[-<span class="hljs-number">1</span>]+fib[-<span class="hljs-number">2</span>])<br>    <span class="hljs-keyword">return</span> fib<br>n=<span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>())<br>result=feibo(n)<br><span class="hljs-built_in">print</span>(result)<br><br></code></pre></td></tr></table></figure>
+
+<p>2025.1.9-1.13</p>
+<p>抱歉给您带来了困惑。让我详细解释一下 <code>return -1, comparisons</code> 的作用，以及为什么它不会在每次调用时都返回 <code>-1</code>。</p>
+<h3 id="1-理解-return-1-comparisons-的逻辑"><a href="#1-理解-return-1-comparisons-的逻辑" class="headerlink" title="1. 理解 **return -1, comparisons** 的逻辑"></a><strong>1. 理解 <strong><code>**return -1, comparisons**</code></strong> 的逻辑</strong></h3><p>在您的二分查找函数 <code>bisect_left_count</code> 中，<code>return -1, comparisons</code> 这一行 <strong>仅在以下情况下执行</strong>：</p>
+<ul>
+<li><strong>目标值 <strong><code>**x**</code></strong> 不存在于数组 <strong><code>**a**</code></strong> 中</strong>。</li>
+<li>**整个搜索过程完成，但未找到 **<code>**x**</code>。<br>这意味着，如果目标值 <code>x</code> 存在于数组 <code>a</code> 中，函数会在找到 <code>x</code> 时立即通过 <code>return mid, comparisons</code> 返回相应的下标和比较次数，而不会执行 <code>return -1, comparisons</code>。</li>
+</ul>
+<h3 id="2-函数执行流程"><a href="#2-函数执行流程" class="headerlink" title="2. 函数执行流程"></a><strong>2. 函数执行流程</strong></h3><p>让我们一步一步分析函数的执行流程：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">bisect_left_count</span>(<span class="hljs-params">a, x, lo=<span class="hljs-number">0</span>, hi=<span class="hljs-literal">None</span></span>):<br>    <span class="hljs-keyword">if</span> hi <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>        hi = <span class="hljs-built_in">len</span>(a)-<span class="hljs-number">1</span>  <span class="hljs-comment"># -1代表包含上界</span><br><br>    comparisons = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">while</span> lo &lt;= hi:<br>        mid = (lo + hi) // <span class="hljs-number">2</span><br>        comparisons += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">if</span> a[mid] == x:<br>            <span class="hljs-keyword">return</span> mid, comparisons  <span class="hljs-comment"># 找到x，立即返回</span><br>        <span class="hljs-keyword">elif</span> a[mid] &lt; x:<br>            lo = mid + <span class="hljs-number">1</span><br>        <span class="hljs-keyword">else</span>:<br>            hi = mid - <span class="hljs-number">1</span><br>    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>, comparisons  <span class="hljs-comment"># 未找到x，返回-1</span><br><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li><strong>初始化</strong>：</li>
+</ol>
+<ul>
+<li><code>lo</code>：搜索范围的下界，初始为 <code>0</code>。</li>
+<li><code>hi</code>：搜索范围的上界，初始为 <code>len(a) - 1</code>（包含上界）。</li>
+</ul>
+<ol>
+<li><strong>循环条件</strong>：</li>
+</ol>
+<ul>
+<li>当 <code>lo &lt;= hi</code> 时，继续搜索。</li>
+<li>计算中间位置 <code>mid = (lo + hi) // 2</code>。</li>
+</ul>
+<ol>
+<li><strong>比较</strong>：</li>
+</ol>
+<ul>
+<li>**如果 **<code>**a[mid] == x**</code>：</li>
+<li>找到了目标值，返回当前下标 <code>mid</code> 和比较次数 <code>comparisons</code>。</li>
+<li>**如果 **<code>**a[mid] &lt; x**</code>：</li>
+<li>目标值在右半部分，更新下界 <code>lo = mid + 1</code>。</li>
+<li><strong>否则</strong>：</li>
+<li>目标值在左半部分，更新上界 <code>hi = mid - 1</code>。</li>
+</ul>
+<ol>
+<li><strong>未找到</strong>：</li>
+</ol>
+<ul>
+<li>如果循环结束后仍未找到 <code>x</code>，返回 <code>1</code> 和总比较次数 <code>comparisons</code>。</li>
+</ul>
+<h3 id="3-示例分析"><a href="#3-示例分析" class="headerlink" title="3. 示例分析"></a><strong>3. 示例分析</strong></h3><p>让我们通过具体的示例来理解函数的行为。</p>
+<h3 id="示例-1：目标值存在"><a href="#示例-1：目标值存在" class="headerlink" title="示例 1：目标值存在"></a><strong>示例 1：目标值存在</strong></h3><p><strong>输入</strong>：</p>
+<figure class="highlight plaintext"><figcaption><span>text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plain">4<br>1 2 3 4<br>1<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>执行步骤</strong>：</p>
+<ol>
+<li><strong>第一次比较</strong>：</li>
+</ol>
+<ul>
+<li><code>lo = 0</code>, <code>hi = 3</code></li>
+<li><code>mid = (0 + 3) // 2 = 1</code></li>
+<li><code>a[1] = 2</code></li>
+<li>比较 <code>2 == 1</code> → 否</li>
+<li>比较 <code>2 &lt; 1</code> → 否</li>
+<li>更新 <code>hi = 0</code></li>
+<li>比较次数：1</li>
+</ul>
+<ol>
+<li><strong>第二次比较</strong>：</li>
+</ol>
+<ul>
+<li><code>lo = 0</code>, <code>hi = 0</code></li>
+<li><code>mid = (0 + 0) // 2 = 0</code></li>
+<li><code>a[0] = 1</code></li>
+<li>比较 <code>1 == 1</code> → 是</li>
+<li>返回 <code>0</code> 和比较次数 <code>2</code><br><strong>输出</strong>：</li>
+</ul>
+<figure class="highlight plaintext"><figcaption><span>text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">0<br>2<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="示例-2：目标值不存在"><a href="#示例-2：目标值不存在" class="headerlink" title="示例 2：目标值不存在"></a><strong>示例 2：目标值不存在</strong></h3><p><strong>输入</strong>：</p>
+<figure class="highlight plaintext"><figcaption><span>text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plain">4<br>1 2 3 4<br>5<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>执行步骤</strong>：</p>
+<ol>
+<li><strong>第一次比较</strong>：</li>
+</ol>
+<ul>
+<li><code>lo = 0</code>, <code>hi = 3</code></li>
+<li><code>mid = 1</code></li>
+<li><code>a[1] = 2</code></li>
+<li>比较 <code>2 == 5</code> → 否</li>
+<li>比较 <code>2 &lt; 5</code> → 是</li>
+<li>更新 <code>lo = 2</code></li>
+<li>比较次数：1</li>
+</ul>
+<ol>
+<li><strong>第二次比较</strong>：</li>
+</ol>
+<ul>
+<li><code>lo = 2</code>, <code>hi = 3</code></li>
+<li><code>mid = 2</code></li>
+<li><code>a[2] = 3</code></li>
+<li>比较 <code>3 == 5</code> → 否</li>
+<li>比较 <code>3 &lt; 5</code> → 是</li>
+<li>更新 <code>lo = 3</code></li>
+<li>比较次数：2</li>
+</ul>
+<ol>
+<li><strong>第三次比较</strong>：</li>
+</ol>
+<ul>
+<li><code>lo = 3</code>, <code>hi = 3</code></li>
+<li><code>mid = 3</code></li>
+<li><code>a[3] = 4</code></li>
+<li>比较 <code>4 == 5</code> → 否</li>
+<li>比较 <code>4 &lt; 5</code> → 是</li>
+<li>更新 <code>lo = 4</code></li>
+<li>比较次数：3</li>
+</ul>
+<ol>
+<li><strong>循环结束</strong>：</li>
+</ol>
+<ul>
+<li><code>lo = 4</code>, <code>hi = 3</code>，满足 <code>lo &gt; hi</code>，退出循环。</li>
+<li>返回 <code>1</code> 和 <code>3</code><br><strong>输出</strong>：</li>
+</ul>
+<figure class="highlight plaintext"><figcaption><span>text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">-1<br>3<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-常见问题排查"><a href="#4-常见问题排查" class="headerlink" title="4. 常见问题排查"></a><strong>4. 常见问题排查</strong></h3><p>如果您发现函数 **总是返回 **<code>**-1**</code>，请检查以下几点：</p>
+<ol>
+<li><strong>输入是否正确</strong>：</li>
+</ol>
+<ul>
+<li>确保输入的数组确实包含目标值。</li>
+<li>确保数组是<strong>非降序排列</strong>的。</li>
+</ul>
+<ol>
+<li><strong>拼写错误</strong>：</li>
+</ol>
+<ul>
+<li>确保在 <code>else</code> 分支中使用 <code>hi = mid - 1</code>，而不是 <code>hi = mid1 - 1</code>。</li>
+<li>确保所有变量名正确，无拼写错误。</li>
+</ul>
+<ol>
+<li><strong>数据类型</strong>：</li>
+</ol>
+<ul>
+<li>确保输入的 <code>n</code>、数组元素和 <code>x</code> 都是整数。</li>
+</ul>
+<ol>
+<li><strong>数组长度</strong>：</li>
+</ol>
+<ul>
+<li>确保数组的长度与输入的 <code>n</code> 值一致。</li>
+</ul>
+<h3 id="5-添加调试信息"><a href="#5-添加调试信息" class="headerlink" title="5. 添加调试信息"></a><strong>5. 添加调试信息</strong></h3><p>为了更好地理解函数的执行过程，您可以在函数中添加调试打印信息。例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">bisect_left_count</span>(<span class="hljs-params">a, x, lo=<span class="hljs-number">0</span>, hi=<span class="hljs-literal">None</span></span>):<br>    <span class="hljs-keyword">if</span> hi <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>        hi = <span class="hljs-built_in">len</span>(a)-<span class="hljs-number">1</span>  <span class="hljs-comment"># -1代表包含上界</span><br><br>    comparisons = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">while</span> lo &lt;= hi:<br>        mid = (lo + hi) // <span class="hljs-number">2</span><br>        comparisons +=<span class="hljs-number">1</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Comparing x=<span class="hljs-subst">&#123;x&#125;</span> with a[<span class="hljs-subst">&#123;mid&#125;</span>]=<span class="hljs-subst">&#123;a[mid]&#125;</span>&quot;</span>)  <span class="hljs-comment"># 调试信息</span><br>        <span class="hljs-keyword">if</span> a[mid] == x:<br>            <span class="hljs-keyword">return</span> mid, comparisons<br>        <span class="hljs-keyword">elif</span> a[mid] &lt; x:<br>            lo = mid + <span class="hljs-number">1</span><br>        <span class="hljs-keyword">else</span>:<br>            hi = mid - <span class="hljs-number">1</span><br>    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>, comparisons<br><br>n = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>())<br>a = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split()))<br>x = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>())<br>result, comps = bisect_left_count(a, x, hi=n-<span class="hljs-number">1</span>)<br><span class="hljs-built_in">print</span>(result)<br><span class="hljs-built_in">print</span>(comps)<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>示例运行</strong>：</p>
+<p><strong>输入</strong>：</p>
+<figure class="highlight plaintext"><figcaption><span>text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plain">4<br>1 2 3 4<br>1<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>输出</strong>：</p>
+<figure class="highlight plaintext"><figcaption><span>text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plain">Comparing x=1 with a[1]=2<br>Comparing x=1 with a[0]=1<br>0<br>2<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>解释</strong>：</p>
+<ul>
+<li><strong>第一次比较</strong>：<code>a[1] = 2</code> 不等于 <code>1</code>，更新 <code>hi = 0</code>。</li>
+<li><strong>第二次比较</strong>：<code>a[0] = 1</code> 等于 <code>1</code>，返回下标 <code>0</code> 和比较次数 <code>2</code>。</li>
+</ul>
+<h3 id="6-完整修正后的代码"><a href="#6-完整修正后的代码" class="headerlink" title="6. 完整修正后的代码"></a><strong>6. 完整修正后的代码</strong></h3><p>以下是完整的、经过修正并包含调试信息的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">bisect_left_count</span>(<span class="hljs-params">a, x, lo=<span class="hljs-number">0</span>, hi=<span class="hljs-literal">None</span></span>):<br>    <span class="hljs-keyword">if</span> hi <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>        hi = <span class="hljs-built_in">len</span>(a)-<span class="hljs-number">1</span>  <span class="hljs-comment"># -1代表包含上界</span><br><br>    comparisons = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">while</span> lo &lt;= hi:<br>        mid = (lo + hi) // <span class="hljs-number">2</span><br>        comparisons +=<span class="hljs-number">1</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Comparing x=<span class="hljs-subst">&#123;x&#125;</span> with a[<span class="hljs-subst">&#123;mid&#125;</span>]=<span class="hljs-subst">&#123;a[mid]&#125;</span>&quot;</span>)  <span class="hljs-comment"># 调试信息</span><br>        <span class="hljs-keyword">if</span> a[mid] == x:<br>            <span class="hljs-keyword">return</span> mid, comparisons<br>        <span class="hljs-keyword">elif</span> a[mid] &lt; x:<br>            lo = mid + <span class="hljs-number">1</span><br>        <span class="hljs-keyword">else</span>:<br>            hi = mid - <span class="hljs-number">1</span><br>    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>, comparisons<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    <span class="hljs-keyword">try</span>:<br>        n = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>())<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> (<span class="hljs-number">1</span> &lt;= n &lt;= <span class="hljs-number">1000</span>):<br>            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&quot;n值必须在1到1000之间。&quot;</span>)<br><br>        a = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split()))<br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(a) != n:<br>            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&quot;数组的长度与n值不匹配。&quot;</span>)<br><br>        <span class="hljs-comment"># 检查数组是否为非降序排列</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">any</span>(a[i] &gt; a[i+<span class="hljs-number">1</span>] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n-<span class="hljs-number">1</span>)):<br>            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&quot;数组必须按非降序排列。&quot;</span>)<br><br>        x = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>())<br><br>        result, comps = bisect_left_count(a, x, hi=n-<span class="hljs-number">1</span>)<br><br>        <span class="hljs-built_in">print</span>(result)<br>        <span class="hljs-built_in">print</span>(comps)<br>    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;输入错误: <span class="hljs-subst">&#123;e&#125;</span>&quot;</span>)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    main()<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="7-进一步建议"><a href="#7-进一步建议" class="headerlink" title="7. 进一步建议"></a><strong>7. 进一步建议</strong></h3><ul>
+<li><strong>移除调试信息</strong>：在确认代码正确后，可以移除 <code>print(f&quot;Comparing x=&#123;x&#125; with a[&#123;mid&#125;]=&#123;a[mid]&#125;&quot;)</code> 这一行，以保持输出的清洁。</li>
+<li><strong>输入验证</strong>：确保输入符合题目要求，数组按非降序排列，且 <code>n</code> 的值在 <code>[1, 1000]</code> 之间。</li>
+<li><strong>测试不同案例</strong>：尝试不同的输入案例，既包括目标值存在的情况，也包括不存在的情况，以确保函数在各种情况下都能正常工作。</li>
+</ul>
+<h3 id="8-完整示例运行"><a href="#8-完整示例运行" class="headerlink" title="8. 完整示例运行"></a><strong>8. 完整示例运行</strong></h3><h3 id="案例-1：目标值存在"><a href="#案例-1：目标值存在" class="headerlink" title="案例 1：目标值存在"></a><strong>案例 1：目标值存在</strong></h3><p><strong>输入</strong>：</p>
+<figure class="highlight plaintext"><figcaption><span>text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plain">4<br>1 2 3 4<br>1<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>输出</strong>：</p>
+<figure class="highlight plaintext"><figcaption><span>text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plain">Comparing x=1 with a[1]=2<br>Comparing x=1 with a[0]=1<br>0<br>2<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="案例-2：目标值不存在"><a href="#案例-2：目标值不存在" class="headerlink" title="案例 2：目标值不存在"></a><strong>案例 2：目标值不存在</strong></h3><p><strong>输入</strong>：</p>
+<figure class="highlight plaintext"><figcaption><span>text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plain">4<br>1 2 3 4<br>5<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>输出</strong>：</p>
+<figure class="highlight plaintext"><figcaption><span>text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plain">Comparing x=5 with a[1]=2<br>Comparing x=5 with a[2]=3<br>Comparing x=5 with a[3]=4<br>-1<br>3<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h3><ul>
+<li><code>**return -1, comparisons**</code>** 的含义**：仅在目标值 <code>x</code> 不存在于数组 <code>a</code> 中时返回 <code>1</code> 和比较次数。</li>
+<li><strong>提前返回</strong>：如果找到 <code>x</code>，函数会立即返回对应的下标和比较次数，不会执行 <code>return -1, comparisons</code>。</li>
+<li><strong>调试与验证</strong>：通过添加调试信息，您可以清楚地看到每一步的比较过程，帮助您理解函数的执行流程并排查问题。<br>如果您按照上述说明检查并运行代码，应该能够正确地执行二分查找并获得预期的结果。如果仍然遇到问题，请确保输入格式正确，并尝试使用调试信息来进一步分析问题所在。</li>
+</ul>
+
+<div class="article-footer fs14">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    </div>
+</article>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/posts/%E5%89%8D%E7%AB%AF.html">前端</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/posts/1.html">Hello World！</a></div></section></div>
+
+<div class="related-wrap" id="related-posts">
+    <section class='header'>
+      <div class='title cap theme'>您可能感兴趣的文章</div>
+    </section>
+    <section class='body'>
+    <div class="related-posts"><a class="item" href="\posts\1.html" title="Hello World！"><span class="title">Hello World！</span></a></div></section></div>
+
+
+  <div class="related-wrap md-text" id="comments">
+    <section class='header cmt-title cap theme'>
+      <p>快来参与讨论吧~</p>
+
+      <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/assets/images/keyboard.jpg" alt="描述" style="margin-left: 10px; height: 50px;">
+    </section>
+    <section class='body cmt-body twikoo'>
+      
+
+<div id="twikoo_container"><svg class="loading" style="vertical-align:middle;fill:currentColor;overflow:hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg></div>
+    </section>
+  </div>
+
 
 
 <footer class="page-footer footnote"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs15">博客</span><a href="/">近期</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/topic/">专栏</a><a href="/archives/">归档</a></div><div class="sitemap-group"><span class="fs15">项目</span><a href="#">暂无</a></div><div class="sitemap-group"><span class="fs15">探索</span><a href="/explore/sites/%E5%B7%A5%E5%85%B7%E5%BA%93.html">站点</a><a href="/explore/notes/%E6%8E%A2%E7%B4%A2%E8%80%85%E7%AC%94%E8%AE%B0.html">笔记</a></div><div class="sitemap-group"><span class="fs15">友链</span><a href="/about/">朋友圈</a></div></div><div class="text"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/assets/images/keyboard.jpg" alt="描述文字" style="float: right; width: 60px; margin-left: 20px;">
@@ -224,6 +370,11 @@ input输入的都是字符串 int()转化成整数
 <div class="totalcount" style="text-align:center">收集了 14 颗星星 ✧ </span><span class="post-count">共 9.2k 粒星尘，好像写完一本 鲁迅 的《呐喊》了啊</div></div></footer>
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="true"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%90%86%E8%A7%A3-return-1-comparisons-%E7%9A%84%E9%80%BB%E8%BE%91"><span class="toc-text">1. 理解 **return -1, comparisons** 的逻辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%87%BD%E6%95%B0%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-text">2. 函数执行流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%A4%BA%E4%BE%8B%E5%88%86%E6%9E%90"><span class="toc-text">3. 示例分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A%E7%9B%AE%E6%A0%87%E5%80%BC%E5%AD%98%E5%9C%A8"><span class="toc-text">示例 1：目标值存在</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A%E7%9B%AE%E6%A0%87%E5%80%BC%E4%B8%8D%E5%AD%98%E5%9C%A8"><span class="toc-text">示例 2：目标值不存在</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5"><span class="toc-text">4. 常见问题排查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%B7%BB%E5%8A%A0%E8%B0%83%E8%AF%95%E4%BF%A1%E6%81%AF"><span class="toc-text">5. 添加调试信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%AE%8C%E6%95%B4%E4%BF%AE%E6%AD%A3%E5%90%8E%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="toc-text">6. 完整修正后的代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E8%BF%9B%E4%B8%80%E6%AD%A5%E5%BB%BA%E8%AE%AE"><span class="toc-text">7. 进一步建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B%E8%BF%90%E8%A1%8C"><span class="toc-text">8. 完整示例运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-1%EF%BC%9A%E7%9B%AE%E6%A0%87%E5%80%BC%E5%AD%98%E5%9C%A8"><span class="toc-text">案例 1：目标值存在</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B-2%EF%BC%9A%E7%9B%AE%E6%A0%87%E5%80%BC%E4%B8%8D%E5%AD%98%E5%9C%A8"><span class="toc-text">案例 2：目标值不存在</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></div><div class="widget-footer">
+
+<a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/></g></svg><span>回到顶部</span></a><a class="buttom" onclick="util.scrollComment()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M10.46 1.25h3.08c1.603 0 2.86 0 3.864.095c1.023.098 1.861.3 2.6.752a5.75 5.75 0 0 1 1.899 1.899c.452.738.654 1.577.752 2.6c.095 1.004.095 2.261.095 3.865v1.067c0 1.141 0 2.036-.05 2.759c-.05.735-.153 1.347-.388 1.913a5.75 5.75 0 0 1-3.112 3.112c-.805.334-1.721.408-2.977.43a10.81 10.81 0 0 0-.929.036c-.198.022-.275.054-.32.08c-.047.028-.112.078-.224.232c-.121.166-.258.396-.476.764l-.542.916c-.773 1.307-2.69 1.307-3.464 0l-.542-.916a10.605 10.605 0 0 0-.476-.764c-.112-.154-.177-.204-.224-.232c-.045-.026-.122-.058-.32-.08c-.212-.023-.49-.03-.93-.037c-1.255-.021-2.171-.095-2.976-.429A5.75 5.75 0 0 1 1.688 16.2c-.235-.566-.338-1.178-.389-1.913c-.049-.723-.049-1.618-.049-2.76v-1.066c0-1.604 0-2.86.095-3.865c.098-1.023.3-1.862.752-2.6a5.75 5.75 0 0 1 1.899-1.899c.738-.452 1.577-.654 2.6-.752C7.6 1.25 8.857 1.25 10.461 1.25M6.739 2.839c-.914.087-1.495.253-1.959.537A4.25 4.25 0 0 0 3.376 4.78c-.284.464-.45 1.045-.537 1.96c-.088.924-.089 2.11-.089 3.761v1c0 1.175 0 2.019.046 2.685c.045.659.131 1.089.278 1.441a4.25 4.25 0 0 0 2.3 2.3c.515.214 1.173.294 2.429.316h.031c.398.007.747.013 1.037.045c.311.035.616.104.909.274c.29.17.5.395.682.645c.169.232.342.525.538.856l.559.944a.52.52 0 0 0 .882 0l.559-.944c.196-.331.37-.624.538-.856c.182-.25.392-.476.682-.645c.293-.17.598-.24.909-.274c.29-.032.639-.038 1.037-.045h.032c1.255-.022 1.913-.102 2.428-.316a4.25 4.25 0 0 0 2.3-2.3c.147-.352.233-.782.278-1.441c.046-.666.046-1.51.046-2.685v-1c0-1.651 0-2.837-.089-3.762c-.087-.914-.253-1.495-.537-1.959a4.25 4.25 0 0 0-1.403-1.403c-.464-.284-1.045-.45-1.96-.537c-.924-.088-2.11-.089-3.761-.089h-3c-1.651 0-2.837 0-3.762.089" clip-rule="evenodd"/><path fill="currentColor" d="M9 11a1 1 0 1 1-2 0a1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0a1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><span>参与讨论</span></a></div></widget>
+
 
   <widget class="widget-wrapper categories-widget">
     <div class="widget-header categories-header dis-select">
@@ -566,6 +717,22 @@ input输入的都是字符串 int()转化成整数
 
 
 <!-- optional -->
+
+  <script type="module">
+  const el = document.getElementById('twikoo_container');
+  util.viewportLazyload(el, load_twikoo, false);
+
+  function load_twikoo() {
+    if (!el) return;
+    utils.js('https://gcore.jsdelivr.net/npm/twikoo@1.6.8/dist/twikoo.all.min.js', {defer: true}).then(function () {
+      const path = el.getAttribute('comment_id') ?? decodeURI(window.location.pathname);
+      twikoo.init(Object.assign({"js":"https://gcore.jsdelivr.net/npm/twikoo@1.6.8/dist/twikoo.all.min.js","envId":"https://lucent-paprenjak-77c3d6.netlify.app/.netlify/functions/twikoo"}, {
+        el: '#twikoo_container',
+        path: path,
+      }));
+    });
+  }
+</script>
 
 
 
