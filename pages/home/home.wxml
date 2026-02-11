@@ -1,0 +1,55 @@
+<view class="page">
+  <view class="hero">
+    <view class="hero-orb orb-1"></view>
+    <view class="hero-orb orb-2"></view>
+    <view class="hero-top">
+      <view class="brand-dot"></view>
+      <view class="brand-text">
+        <text class="brand-title">旅安指南</text>
+        <text class="brand-subtitle">出行安全 · 医学科普</text>
+      </view>
+      <view class="hero-badge">长期更新</view>
+    </view>
+    <text class="hero-title">让每一次旅行都更安心</text>
+    <text class="hero-desc">权威来源 + 实用建议，随时查阅旅途风险预防与应急处理。</text>
+    <view class="hero-tags">
+      <text class="hero-tag">急救常识</text>
+      <text class="hero-tag">风险预防</text>
+      <text class="hero-tag">健康提醒</text>
+    </view>
+  </view>
+
+  <view class="section">
+    <text class="section-title">最新科普</text>
+    <text class="section-subtitle">点击卡片查看详情</text>
+  </view>
+
+  <view class="list">
+    <block wx:for="{{articles}}" wx:for-index="index" wx:key="listKey">
+      <view class="card" bindtap="onOpenDetail" data-id="{{item.id}}" style="animation-delay: {{item.delay}}s;">
+        <view class="card-accent"></view>
+        <view class="card-main">
+          <text class="card-title">{{item.title}}</text>
+          <text class="card-summary">{{item.summary}}</text>
+          <view class="meta">
+            <text class="tag {{item.riskLevelClass}}">{{item.riskLevelLabel}}</text>
+            <text class="meta-text">{{item.publishTimeLabel}}</text>
+            <text class="meta-dot">·</text>
+            <text class="meta-text">{{item.readCount}} 阅读</text>
+          </view>
+        </view>
+        <view class="thumb">
+          <image wx:if="{{item.cover}}" class="thumb-image" src="{{item.cover}}" mode="aspectFill"></image>
+          <view wx:else class="thumb-placeholder">
+            <view class="thumb-line"></view>
+            <view class="thumb-line short"></view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view wx:if="{{loading}}" class="status">正在加载...</view>
+  <view wx:if="{{!loading && !articles.length}}" class="status">还没有内容，稍后再来</view>
+</view>
+

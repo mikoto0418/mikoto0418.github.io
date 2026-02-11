@@ -1,0 +1,25 @@
+page {
+  --brand-900: #0a2b78;
+  --brand-700: #164fd1;
+  --brand-600: #1e6bff;
+  --brand-500: #4b8bff;
+  --brand-200: #cfe0ff;
+  --brand-100: #eaf2ff;
+  --bg-0: #f5f8ff;
+  --bg-1: #ffffff;
+  --text-900: #0b1b3a;
+  --text-700: #2d3c5c;
+  --text-500: #5c6f95;
+  --text-400: #7d8fb3;
+  --shadow-1: 0 18rpx 40rpx rgba(13, 39, 84, 0.12);
+  --shadow-2: 0 10rpx 24rpx rgba(13, 39, 84, 0.08);
+  --radius-lg: 28rpx;
+  --radius-md: 18rpx;
+  background: linear-gradient(180deg, #eaf2ff 0%, #f7faff 50%, #ffffff 100%);
+  color: var(--text-900);
+  font-family: "HarmonyOS Sans SC", "PingFang SC", "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", "Heiti SC", sans-serif;
+}
+
+page view {
+  box-sizing: border-box;
+}

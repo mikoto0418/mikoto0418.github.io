@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/detail/detail",
+    "pages/admin/admin"
+  ],
+  "window": {
+    "navigationBarTitleText": "旅安指南",
+    "navigationBarBackgroundColor": "#1E6BFF",
+    "navigationBarTextStyle": "white",
+    "backgroundTextStyle": "light"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

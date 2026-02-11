@@ -1,0 +1,68 @@
+<view class="page">
+  <view wx:if="{{notFound}}" class="status">内容未找到</view>
+
+  <view wx:elif="{{article}}">
+    <view class="hero-card">
+      <text class="title">{{article.title}}</text>
+      <block wx:if="{{article.summaryHtml}}">
+        <rich-text class="lead rich" nodes="{{article.summaryHtml}}"></rich-text>
+      </block>
+      <block wx:elif="{{article.summary}}">
+        <text class="lead">{{article.summary}}</text>
+      </block>
+      <view class="meta">
+        <text class="tag {{article.riskLevelClass}}">{{article.riskLevelLabel}}</text>
+        <text class="meta-text">{{article.publishTimeLabel}}</text>
+        <text class="meta-dot">·</text>
+        <text class="meta-text">{{article.readCount}} 阅读</text>
+      </view>
+    </view>
+
+    <image wx:if="{{article.cover}}" class="cover" src="{{article.cover}}" mode="aspectFill"></image>
+
+    <view class="content-card">
+      <block wx:if="{{article.contentHtml}}">
+        <view wx:if="{{article.warningHtml || article.warningText}}" class="warning">
+          <text class="warning-title">风险提示</text>
+          <block wx:if="{{article.warningHtml}}">
+            <rich-text class="warning-text" nodes="{{article.warningHtml}}"></rich-text>
+          </block>
+          <block wx:elif="{{article.warningText}}">
+            <text class="warning-text">{{article.warningText}}</text>
+          </block>
+        </view>
+        <rich-text class="rich-body" nodes="{{article.contentHtml}}"></rich-text>
+      </block>
+      <block wx:elif="{{article.contentBlocks}}">
+        <block wx:for="{{article.contentBlocks}}" wx:key="index">
+          <view wx:if="{{item.type === 'paragraph'}}" class="paragraph">{{item.text}}</view>
+          <view wx:elif="{{item.type === 'warning'}}" class="warning">
+            <text class="warning-title">风险提示</text>
+            <text class="warning-text">{{item.text}}</text>
+          </view>
+          <view wx:elif="{{item.type === 'image'}}" class="image-block">
+            <image class="image" src="{{item.url}}" mode="widthFix"></image>
+            <text class="caption">{{item.caption}}</text>
+          </view>
+        </block>
+      </block>
+    </view>
+
+    <view class="sources-card">
+      <text class="section-title">资料来源</text>
+      <block wx:if="{{article.sourcesHtml}}">
+        <rich-text class="source-item rich" nodes="{{article.sourcesHtml}}"></rich-text>
+      </block>
+      <block wx:elif="{{article.sources}}">
+        <block wx:for="{{article.sources}}" wx:key="index">
+          <text class="source-item">- {{item}}</text>
+        </block>
+      </block>
+    </view>
+
+    <view class="disclaimer">
+      <text class="disclaimer-title">免责声明</text>
+      <text class="disclaimer-text">医学内容仅用于科普，紧急情况请及时就医。</text>
+    </view>
+  </view>
+</view>
