@@ -1,0 +1,145 @@
+.page {
+  padding: 24rpx 28rpx 80rpx;
+}
+
+.header {
+  margin-bottom: 20rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--brand-900);
+  display: block;
+}
+
+.subtitle {
+  margin-top: 6rpx;
+  font-size: 24rpx;
+  color: var(--text-600);
+  display: block;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 20rpx;
+  padding: 20rpx;
+  box-shadow: 0 10rpx 24rpx rgba(15, 40, 90, 0.08);
+}
+
+.section-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--text-900);
+  margin-bottom: 16rpx;
+  display: block;
+}
+
+.field {
+  margin-bottom: 16rpx;
+}
+
+.label {
+  font-size: 22rpx;
+  color: #6b7c9f;
+  margin-bottom: 6rpx;
+  display: block;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 12rpx 14rpx;
+  border-radius: 12rpx;
+  border: 1rpx solid #d6e3ff;
+  background: #f9fbff;
+  font-size: 24rpx;
+  color: var(--text-900);
+}
+
+.textarea {
+  min-height: 120rpx;
+}
+
+.picker {
+  padding: 12rpx 14rpx;
+  border-radius: 12rpx;
+  border: 1rpx solid #d6e3ff;
+  background: #f9fbff;
+}
+
+.picker-value {
+  font-size: 24rpx;
+  color: var(--text-900);
+}
+
+.actions {
+  display: flex;
+  gap: 12rpx;
+  margin-top: 10rpx;
+}
+
+.btn {
+  flex: 1;
+  font-size: 24rpx;
+  border-radius: 12rpx;
+  background: #e8f0ff;
+  color: var(--brand-900);
+}
+
+.btn.primary {
+  background: var(--brand-600);
+  color: #ffffff;
+}
+
+.btn.outline {
+  background: transparent;
+  border: 1rpx solid #c7dbff;
+}
+
+.btn.small {
+  font-size: 22rpx;
+  padding: 6rpx 12rpx;
+}
+
+.btn.danger {
+  background: #ffe7ea;
+  color: #c03b4c;
+}
+
+.list {
+  margin-top: 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.item {
+  background: #ffffff;
+  border-radius: 16rpx;
+  padding: 16rpx;
+  box-shadow: 0 8rpx 16rpx rgba(15, 40, 90, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.item-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--text-900);
+}
+
+.item-meta {
+  font-size: 22rpx;
+  color: #6b7c9f;
+}
+
+.item-actions {
+  display: flex;
+  gap: 12rpx;
+}
+
+.footer {
+  margin-top: 24rpx;
+}

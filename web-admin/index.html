@@ -1,0 +1,173 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>旅安指南</title>
+    <link rel="stylesheet" href="./styles.css?v=20260211-1" />
+  </head>
+  <body>
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+
+    <main class="container">
+      <header class="site-header">
+        <div>
+          <button id="brandHomeBtn" class="brand-button" type="button">旅安指南</button>
+          <p class="muted">旅行健康安全信息站</p>
+        </div>
+      </header>
+
+      <section id="frontPanel" class="panel">
+        <div id="frontListView">
+          <div class="section-head">
+            <h1>旅行安全信息流</h1>
+            <p class="muted">点击卡片查看详情。管理入口仅内部使用。</p>
+          </div>
+          <div id="frontList" class="front-list"></div>
+        </div>
+
+        <div id="frontDetailView" class="hidden">
+          <button id="backToListBtn" class="button ghost" type="button">返回列表</button>
+          <article id="detailArticle" class="detail-article"></article>
+        </div>
+      </section>
+
+      <section id="adminRoot" class="panel hidden">
+        <section id="loginPanel" class="admin-login">
+          <div class="panel-header">
+            <div class="brand-dot"></div>
+            <div>
+              <h2>内容后台</h2>
+              <p>输入口令进入管理模式</p>
+            </div>
+          </div>
+          <label class="label" for="password">管理员口令</label>
+          <input id="password" class="input" type="password" placeholder="请输入口令" />
+          <button id="loginBtn" class="button primary" type="button">登录</button>
+          <div id="loginError" class="error"></div>
+        </section>
+
+        <section id="adminPanel" class="hidden">
+          <header class="admin-header">
+            <div>
+              <h2>内容管理</h2>
+              <p class="muted">纯静态模式（浏览器存储）</p>
+            </div>
+            <div class="actions">
+              <button id="refreshBtn" class="button ghost" type="button">刷新</button>
+              <button id="logoutBtn" class="button ghost" type="button">退出</button>
+            </div>
+          </header>
+
+          <div class="data-actions">
+            <button id="exportBtn" class="button ghost" type="button">导出 JSON</button>
+            <button id="importBtn" class="button ghost" type="button">导入 JSON</button>
+            <button id="restoreBtn" class="button ghost" type="button">恢复默认</button>
+            <input id="importFile" class="hidden" type="file" accept="application/json,.json" />
+          </div>
+          <div id="dataStatus" class="muted"></div>
+
+          <div class="grid">
+            <div class="card">
+              <h3>编辑文章</h3>
+              <div class="form-grid">
+                <div>
+                  <label class="label" for="title">标题</label>
+                  <input id="title" class="input" type="text" placeholder="请输入标题" />
+                </div>
+                <div>
+                  <label class="label" for="publishTime">发布日期</label>
+                  <input id="publishTime" class="input" type="date" />
+                </div>
+                <div>
+                  <label class="label" for="summary">摘要</label>
+                  <div class="editor-block">
+                    <div class="editor-toolbar" role="toolbar" aria-label="摘要编辑工具">
+                      <button type="button" class="tool" data-cmd="bold" title="加粗"><strong>B</strong></button>
+                      <button type="button" class="tool" data-cmd="italic" title="斜体"><em>I</em></button>
+                      <button type="button" class="tool" data-cmd="underline" title="下划线"><span class="tool-underline">U</span></button>
+                      <input type="color" class="tool-color" title="文字颜色" />
+                      <button type="button" class="tool" data-cmd="removeFormat" title="清除格式">Tx</button>
+                    </div>
+                    <div id="summary" class="editor" contenteditable="true" data-placeholder="一句话摘要"></div>
+                  </div>
+                </div>
+                <div>
+                  <label class="label" for="riskLevel">风险等级</label>
+                  <select id="riskLevel" class="input">
+                    <option value="low">低风险</option>
+                    <option value="medium" selected>中风险</option>
+                    <option value="high">高风险</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="label" for="content">正文内容</label>
+                  <div class="editor-block">
+                    <div class="editor-toolbar" role="toolbar" aria-label="正文编辑工具">
+                      <button type="button" class="tool" data-cmd="bold" title="加粗"><strong>B</strong></button>
+                      <button type="button" class="tool" data-cmd="italic" title="斜体"><em>I</em></button>
+                      <button type="button" class="tool" data-cmd="underline" title="下划线"><span class="tool-underline">U</span></button>
+                      <input type="color" class="tool-color" title="文字颜色" />
+                      <button type="button" class="tool" data-cmd="removeFormat" title="清除格式">Tx</button>
+                    </div>
+                    <div id="content" class="editor" contenteditable="true" data-placeholder="每行一段正文"></div>
+                  </div>
+                </div>
+                <div>
+                  <label class="label" for="warning">风险提示</label>
+                  <div class="editor-block">
+                    <div class="editor-toolbar" role="toolbar" aria-label="风险提示编辑工具">
+                      <button type="button" class="tool" data-cmd="bold" title="加粗"><strong>B</strong></button>
+                      <button type="button" class="tool" data-cmd="italic" title="斜体"><em>I</em></button>
+                      <button type="button" class="tool" data-cmd="underline" title="下划线"><span class="tool-underline">U</span></button>
+                      <input type="color" class="tool-color" title="文字颜色" />
+                      <button type="button" class="tool" data-cmd="removeFormat" title="清除格式">Tx</button>
+                    </div>
+                    <div id="warning" class="editor" contenteditable="true" data-placeholder="可选，风险提示"></div>
+                  </div>
+                </div>
+                <div>
+                  <label class="label" for="sources">资料来源</label>
+                  <div class="editor-block">
+                    <div class="editor-toolbar" role="toolbar" aria-label="资料来源编辑工具">
+                      <button type="button" class="tool" data-cmd="bold" title="加粗"><strong>B</strong></button>
+                      <button type="button" class="tool" data-cmd="italic" title="斜体"><em>I</em></button>
+                      <button type="button" class="tool" data-cmd="underline" title="下划线"><span class="tool-underline">U</span></button>
+                      <input type="color" class="tool-color" title="文字颜色" />
+                      <button type="button" class="tool" data-cmd="removeFormat" title="清除格式">Tx</button>
+                    </div>
+                    <div id="sources" class="editor" contenteditable="true" data-placeholder="每行一个来源"></div>
+                  </div>
+                </div>
+                <div>
+                  <label class="label" for="coverUrl">封面链接</label>
+                  <input id="coverUrl" class="input" type="text" placeholder="可填 URL，或上传后自动写入 Base64" />
+                  <div class="upload">
+                    <input id="coverFile" class="file" type="file" accept="image/*" />
+                    <button id="uploadBtn" class="button ghost" type="button">本地转码</button>
+                    <span id="uploadStatus" class="muted"></span>
+                  </div>
+                  <img id="coverPreview" class="preview hidden" alt="封面预览" />
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button id="submitBtn" class="button primary" type="button">发布</button>
+                <button id="resetBtn" class="button" type="button">重置</button>
+              </div>
+              <div id="formError" class="error"></div>
+            </div>
+
+            <div class="card">
+              <h3>已发布文章</h3>
+              <div id="articleList" class="list"></div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="./app.js?v=20260211-1"></script>
+  </body>
+</html>

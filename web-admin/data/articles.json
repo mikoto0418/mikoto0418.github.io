@@ -1,0 +1,107 @@
+﻿[
+  {
+    "id": "a_20250112_altitude",
+    "title": "高原反应的早期识别与自救",
+    "summary": "识别高原反应、降低风险与紧急处理要点。",
+    "summaryHtml": "识别高原反应、降低风险与紧急处理要点。",
+    "cover": "",
+    "publishTime": "2025-01-12",
+    "readCount": 1523,
+    "riskLevel": "medium",
+    "contentBlocks": [
+      {
+        "type": "warning",
+        "text": "出现持续性呼吸困难、意识模糊或剧烈头痛时请立即就医。"
+      },
+      {
+        "type": "paragraph",
+        "text": "高原反应常见于海拔 2500 米以上地区，尤其是短时间快速上升时。"
+      },
+      {
+        "type": "paragraph",
+        "text": "早期症状包括头痛、乏力、恶心和睡眠不佳，建议减缓上升速度并补充水分。"
+      },
+      {
+        "type": "paragraph",
+        "text": "休息后仍明显加重时，应尽快下撤并寻求医疗帮助。"
+      }
+    ],
+    "contentHtml": "",
+    "warningHtml": "出现持续性呼吸困难、意识模糊或剧烈头痛时请立即就医。",
+    "sources": [
+      "WHO 旅行健康指南 2024",
+      "国家卫健委科普资料"
+    ],
+    "sourcesHtml": "WHO 旅行健康指南 2024<br>国家卫健委科普资料"
+  },
+  {
+    "id": "a_20250110_heat",
+    "title": "高温旅行防中暑指引",
+    "summary": "高温出行的补水、降温与应急处理。",
+    "summaryHtml": "高温出行的补水、降温与应急处理。",
+    "cover": "",
+    "publishTime": "2025-01-10",
+    "readCount": 987,
+    "riskLevel": "high",
+    "contentBlocks": [
+      {
+        "type": "warning",
+        "text": "出现意识模糊、抽搐或体温持续升高时，应立刻就医或呼叫急救。"
+      },
+      {
+        "type": "paragraph",
+        "text": "尽量避开 11:00-15:00 的高温时段，优先安排清晨或傍晚出行。"
+      },
+      {
+        "type": "paragraph",
+        "text": "穿浅色透气衣物，少量多次补水，必要时补充电解质。"
+      },
+      {
+        "type": "paragraph",
+        "text": "老人、儿童和慢性病患者需重点防护，避免长时间暴晒。"
+      }
+    ],
+    "contentHtml": "",
+    "warningHtml": "出现意识模糊、抽搐或体温持续升高时，应立刻就医或呼叫急救。",
+    "sources": [
+      "WHO 高温健康指南",
+      "中国疾控中心健康提示"
+    ],
+    "sourcesHtml": "WHO 高温健康指南<br>中国疾控中心健康提示"
+  },
+  {
+    "id": "a_20250108_kit",
+    "title": "旅行急救包清单（轻装版）",
+    "summary": "轻量急救包必备品和使用提示。",
+    "summaryHtml": "轻量急救包必备品和使用提示。",
+    "cover": "",
+    "publishTime": "2025-01-08",
+    "readCount": 642,
+    "riskLevel": "low",
+    "contentBlocks": [
+      {
+        "type": "warning",
+        "text": "处方药请勿随意借给他人，以免发生严重不良反应。"
+      },
+      {
+        "type": "paragraph",
+        "text": "建议携带创可贴、消毒湿巾、弹性绷带、止泻药和退烧药。"
+      },
+      {
+        "type": "paragraph",
+        "text": "常用处方药应备足疗程，并保留药品说明。"
+      },
+      {
+        "type": "paragraph",
+        "text": "如遇持续不适或较重外伤，请及时前往就近医疗点。"
+      }
+    ],
+    "contentHtml": "",
+    "warningHtml": "处方药请勿随意借给他人，以免发生严重不良反应。",
+    "sources": [
+      "旅行门诊建议",
+      "公共卫生科普指引"
+    ],
+    "sourcesHtml": "旅行门诊建议<br>公共卫生科普指引"
+  }
+]

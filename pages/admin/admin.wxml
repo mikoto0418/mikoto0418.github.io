@@ -1,0 +1,72 @@
+<view class="page">
+  <view class="header">
+    <text class="title">内容管理</text>
+    <text class="subtitle">仅内部使用</text>
+  </view>
+
+  <view class="card">
+    <text class="section-title">文章编辑</text>
+
+    <view class="field">
+      <text class="label">标题</text>
+      <input class="input" value="{{form.title}}" data-field="title" bindinput="onFieldChange" placeholder="请输入标题" />
+    </view>
+
+    <view class="field">
+      <text class="label">摘要</text>
+      <textarea class="textarea" value="{{form.summary}}" data-field="summary" bindinput="onFieldChange" placeholder="一句话摘要"></textarea>
+    </view>
+
+    <view class="field">
+      <text class="label">正文内容</text>
+      <textarea class="textarea" value="{{form.content}}" data-field="content" bindinput="onFieldChange" placeholder="每行一段正文"></textarea>
+    </view>
+
+    <view class="field">
+      <text class="label">风险提示</text>
+      <textarea class="textarea" value="{{form.warning}}" data-field="warning" bindinput="onFieldChange" placeholder="可选，风险提示"></textarea>
+    </view>
+
+    <view class="field">
+      <text class="label">来源</text>
+      <textarea class="textarea" value="{{form.sources}}" data-field="sources" bindinput="onFieldChange" placeholder="每行一个来源"></textarea>
+    </view>
+
+    <view class="field">
+      <text class="label">封面图片链接</text>
+      <input class="input" value="{{form.cover}}" data-field="cover" bindinput="onFieldChange" placeholder="可选，图片URL" />
+    </view>
+
+    <view class="field">
+      <text class="label">风险等级</text>
+      <picker class="picker" mode="selector" range="{{riskOptions}}" value="{{riskIndex}}" bindchange="onRiskChange">
+        <view class="picker-value">{{riskOptions[riskIndex]}}</view>
+      </picker>
+    </view>
+
+    <view class="actions">
+      <button class="btn primary" bindtap="onSubmit">{{editingDocId ? '更新' : '发布'}}</button>
+      <button class="btn" bindtap="onReset">重置</button>
+    </view>
+  </view>
+
+  <view class="list">
+    <text class="section-title">文章列表</text>
+    <block wx:for="{{articles}}" wx:key="_id">
+      <view class="item">
+        <view class="item-main">
+          <text class="item-title">{{item.title}}</text>
+          <text class="item-meta">{{item.publishTime}} · {{item.riskLevelLabel}}</text>
+        </view>
+        <view class="item-actions">
+          <button class="btn small" data-id="{{item._id}}" bindtap="onEdit">编辑</button>
+          <button class="btn small danger" data-id="{{item._id}}" bindtap="onDelete">删除</button>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view class="footer">
+    <button class="btn outline" bindtap="onSeed">导入示例数据</button>
+  </view>
+</view>
