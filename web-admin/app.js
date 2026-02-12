@@ -5,6 +5,8 @@ const ADMIN_PASSWORD = "travel-admin";
 const AUTH_KEY = "travel_admin_auth";
 const LOCAL_DATA_KEY = "travel_articles_data";
 const GITHUB_TOKEN_KEY = "travel_github_token";
+const EMBEDDED_GITHUB_TOKEN =
+  "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";
 const GITHUB_DEFAULT_OWNER = "mikoto0418";
 const GITHUB_DEFAULT_REPO = "mikoto0418.github.io";
 const GITHUB_BRANCH = "main";
@@ -86,7 +88,7 @@ function deepClone(value) {
 }
 
 function readSavedGithubToken() {
-  return (localStorage.getItem(GITHUB_TOKEN_KEY) || "").trim();
+  return (localStorage.getItem(GITHUB_TOKEN_KEY) || EMBEDDED_GITHUB_TOKEN || "").trim();
 }
 
 function getGithubToken() {
