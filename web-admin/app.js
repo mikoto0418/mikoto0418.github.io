@@ -4,6 +4,10 @@ const ARTICLE_ROUTE_PREFIX = "/article/";
 const ADMIN_PASSWORD = "travel-admin";
 const AUTH_KEY = "travel_admin_auth";
 const LOCAL_DATA_KEY = "travel_articles_data";
+const DATA_DB_NAME = "travel_admin_db";
+const DATA_DB_VERSION = 1;
+const DATA_DB_STORE = "kv";
+const MAX_EMBED_IMAGE_BYTES = 380 * 1024;
 
 const RISK_LABEL_MAP = {
   low: "低风险",
@@ -70,6 +74,66 @@ function today() {
 
 function deepClone(value) {
   return JSON.parse(JSON.stringify(value));
+}
+
+let dataDbPromise = null;
+
+function isQuotaError(err) {
+  if (!err) return false;
+  if (err.name === "QuotaExceededError") return true;
+  return typeof err.message === "string" && err.message.toLowerCase().includes("quota");
+}
+
+function openDataDb() {
+  if (!("indexedDB" in window)) {
+    return Promise.resolve(null);
+  }
+  if (dataDbPromise) {
+    return dataDbPromise;
+  }
+
+  dataDbPromise = new Promise((resolve, reject) => {
+    const request = window.indexedDB.open(DATA_DB_NAME, DATA_DB_VERSION);
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      if (!db.objectStoreNames.contains(DATA_DB_STORE)) {
+        db.createObjectStore(DATA_DB_STORE);
+      }
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  }).catch((err) => {
+    console.warn("IndexedDB 初始化失败，将回退 localStorage", err);
+    dataDbPromise = Promise.resolve(null);
+    return null;
+  });
+
+  return dataDbPromise;
+}
+
+async function idbGet(key) {
+  const db = await openDataDb();
+  if (!db) return null;
+
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(DATA_DB_STORE, "readonly");
+    const store = tx.objectStore(DATA_DB_STORE);
+    const req = store.get(key);
+    req.onsuccess = () => resolve(req.result || null);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function idbSet(key, value) {
+  const db = await openDataDb();
+  if (!db) return false;
+
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(DATA_DB_STORE, "readwrite");
+    tx.oncomplete = () => resolve(true);
+    tx.onerror = () => reject(tx.error);
+    tx.objectStore(DATA_DB_STORE).put(value, key);
+  });
 }
 
 function isEditorField(element) {
@@ -230,12 +294,49 @@ function sortArticles(items) {
   });
 }
 
-function persistArticles() {
-  localStorage.setItem(LOCAL_DATA_KEY, JSON.stringify(state.articles));
+async function persistArticles() {
+  const payload = JSON.stringify(state.articles);
+
+  try {
+    const saved = await idbSet(LOCAL_DATA_KEY, payload);
+    if (saved) {
+      return;
+    }
+  } catch (err) {
+    if (!isQuotaError(err)) {
+      console.warn("IndexedDB 写入失败，尝试回退 localStorage", err);
+    }
+  }
+
+  try {
+    localStorage.setItem(LOCAL_DATA_KEY, payload);
+  } catch (err) {
+    if (isQuotaError(err)) {
+      throw new Error("本地存储空间不足。请压缩图片、改用外链，或删除部分历史数据。");
+    }
+    throw err;
+  }
 }
 
-function loadLocalArticles() {
-  const raw = localStorage.getItem(LOCAL_DATA_KEY);
+async function loadLocalArticles() {
+  let raw = null;
+  try {
+    raw = await idbGet(LOCAL_DATA_KEY);
+  } catch (err) {
+    console.warn("IndexedDB 读取失败，尝试回退 localStorage", err);
+  }
+
+  if (!raw) {
+    raw = localStorage.getItem(LOCAL_DATA_KEY);
+    if (raw) {
+      try {
+        await idbSet(LOCAL_DATA_KEY, raw);
+      } catch (err) {
+        // ignore migration failure
+      }
+    }
+  }
+
   if (!raw) {
     return null;
   }
@@ -489,8 +590,8 @@ function fillForm(article) {
   }
 }
 
-function persistAndRender() {
-  persistArticles();
+async function persistAndRender() {
+  await persistArticles();
   renderFrontList();
   renderAdminList();
   renderRoute();
@@ -558,7 +659,7 @@ function logout() {
   resetForm();
 }
 
-function handleSubmit() {
+async function handleSubmit() {
   setError(dom.formError, "");
 
   try {
@@ -574,38 +675,85 @@ function handleSubmit() {
     }
 
     resetForm();
-    persistAndRender();
+    await persistAndRender();
   } catch (err) {
     setError(dom.formError, err.message || "保存失败");
   }
 }
 
-function handleDelete(articleId) {
+async function handleDelete(articleId) {
   if (!window.confirm("确认删除该文章？")) {
     return;
   }
 
-  state.articles = state.articles.filter((item) => item.id !== articleId);
-  persistAndRender();
-  setStatus("文章已删除（已保存到浏览器本地）");
+  try {
+    state.articles = state.articles.filter((item) => item.id !== articleId);
+    await persistAndRender();
+    setStatus("文章已删除（已保存到浏览器本地）");
 
-  if (state.editingId === articleId) {
-    resetForm();
-  }
+    if (state.editingId === articleId) {
+      resetForm();
+    }
 
-  const route = parseRoute();
-  if (route.name === "detail" && route.id === articleId) {
-    window.location.hash = "#/";
+    const route = parseRoute();
+    if (route.name === "detail" && route.id === articleId) {
+      window.location.hash = "#/";
+    }
+  } catch (err) {
+    setStatus(`删除失败：${err.message || "未知错误"}`);
   }
 }
 
-function fileToBase64(file) {
+function dataUrlByteLength(dataUrl) {
+  if (typeof dataUrl !== "string") return 0;
+  const base64 = dataUrl.split(",")[1] || "";
+  return Math.ceil((base64.length * 3) / 4);
+}
+
+function loadImageFromFile(file) {
   return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result || "");
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
+    const objectUrl = URL.createObjectURL(file);
+    const image = new Image();
+    image.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+      resolve(image);
+    };
+    image.onerror = (err) => {
+      URL.revokeObjectURL(objectUrl);
+      reject(err);
+    };
+    image.src = objectUrl;
   });
+}
+
+async function compressImageToDataUrl(file) {
+  const image = await loadImageFromFile(file);
+  const maxSide = 1280;
+  const ratio = Math.min(1, maxSide / Math.max(image.width, image.height));
+  const targetWidth = Math.max(1, Math.round(image.width * ratio));
+  const targetHeight = Math.max(1, Math.round(image.height * ratio));
+
+  const canvas = document.createElement("canvas");
+  canvas.width = targetWidth;
+  canvas.height = targetHeight;
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(image, 0, 0, targetWidth, targetHeight);
+
+  let quality = 0.86;
+  let output = canvas.toDataURL("image/jpeg", quality);
+  let bytes = dataUrlByteLength(output);
+
+  while (bytes > MAX_EMBED_IMAGE_BYTES && quality > 0.42) {
+    quality -= 0.08;
+    output = canvas.toDataURL("image/jpeg", quality);
+    bytes = dataUrlByteLength(output);
+  }
+
+  if (bytes > MAX_EMBED_IMAGE_BYTES) {
+    throw new Error("图片体积过大，请改用图片链接（URL）或继续压缩后再上传。");
+  }
+
+  return output;
 }
 
 async function handleUpload() {
@@ -617,13 +765,13 @@ async function handleUpload() {
 
   dom.uploadStatus.textContent = "转码中...";
   try {
-    const base64 = await fileToBase64(file);
+    const base64 = await compressImageToDataUrl(file);
     dom.coverUrl.value = String(base64);
     dom.coverPreview.src = String(base64);
     dom.coverPreview.classList.remove("hidden");
-    dom.uploadStatus.textContent = "已写入封面链接（Base64）";
+    dom.uploadStatus.textContent = "已压缩并写入封面（Base64）";
   } catch (err) {
-    dom.uploadStatus.textContent = "图片处理失败";
+    dom.uploadStatus.textContent = `图片处理失败：${err.message || "未知错误"}`;
   }
 }
 
@@ -641,7 +789,7 @@ function exportArticles() {
   setStatus("已导出 JSON，请将文件覆盖到 web-admin/data/articles.json 并提交到 GitHub。");
 }
 
-function restoreDefaultArticles() {
+async function restoreDefaultArticles() {
   if (!state.defaultArticles.length) {
     setStatus("默认数据为空，无法恢复。");
     return;
@@ -651,10 +799,14 @@ function restoreDefaultArticles() {
     return;
   }
 
-  state.articles = deepClone(state.defaultArticles);
-  persistAndRender();
-  resetForm();
-  setStatus("已恢复默认数据。");
+  try {
+    state.articles = deepClone(state.defaultArticles);
+    await persistAndRender();
+    resetForm();
+    setStatus("已恢复默认数据。");
+  } catch (err) {
+    setStatus(`恢复失败：${err.message || "未知错误"}`);
+  }
 }
 
 async function handleImportFile(event) {
@@ -671,7 +823,7 @@ async function handleImportFile(event) {
     }
 
     state.articles = parsed.map((item, index) => normalizeArticle(item, index));
-    persistAndRender();
+    await persistAndRender();
     resetForm();
     setStatus("导入成功，已写入浏览器本地存储。");
   } catch (err) {
@@ -698,17 +850,23 @@ function bindEvents() {
     }
   });
 
-  dom.refreshBtn.addEventListener("click", () => {
-    const local = loadLocalArticles();
-    if (local && local.length) {
-      state.articles = local;
-      setStatus("已从浏览器本地存储刷新");
-    } else {
-      state.articles = deepClone(state.defaultArticles);
-      persistArticles();
-      setStatus("未发现本地数据，已使用默认数据");
+  dom.refreshBtn.addEventListener("click", async () => {
+    try {
+      const local = await loadLocalArticles();
+      if (local && local.length) {
+        state.articles = local;
+        setStatus("已从浏览器本地存储刷新");
+      } else {
+        state.articles = deepClone(state.defaultArticles);
+        await persistArticles();
+        setStatus("未发现本地数据，已使用默认数据");
+      }
+      renderFrontList();
+      renderAdminList();
+      renderRoute();
+    } catch (err) {
+      setStatus(`刷新失败：${err.message || "未知错误"}`);
     }
-    persistAndRender();
   });
 
   dom.logoutBtn.addEventListener("click", logout);
@@ -774,7 +932,7 @@ function bindEvents() {
 async function initData() {
   state.defaultArticles = await loadDefaultArticles();
 
-  const local = loadLocalArticles();
+  const local = await loadLocalArticles();
   if (local && local.length) {
     state.articles = local;
     setStatus("已加载浏览器本地数据");
@@ -782,7 +940,7 @@ async function initData() {
   }
 
   state.articles = deepClone(state.defaultArticles);
-  persistArticles();
+  await persistArticles();
 
   if (state.articles.length) {
     setStatus("已加载默认数据。后续改动会保存到浏览器本地。");
