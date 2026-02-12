@@ -4,7 +4,6 @@ const ARTICLE_ROUTE_PREFIX = "/article/";
 const ADMIN_PASSWORD = "travel-admin";
 const AUTH_KEY = "travel_admin_auth";
 const LOCAL_DATA_KEY = "travel_articles_data";
-const GITHUB_TOKEN_KEY = "travel_github_token";
 const EMBEDDED_GITHUB_TOKEN =
   "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";
 const GITHUB_DEFAULT_OWNER = "mikoto0418";
@@ -51,10 +50,6 @@ const dom = {
   importBtn: document.getElementById("importBtn"),
   restoreBtn: document.getElementById("restoreBtn"),
   importFile: document.getElementById("importFile"),
-  githubToken: document.getElementById("githubToken"),
-  rememberToken: document.getElementById("rememberToken"),
-  clearTokenBtn: document.getElementById("clearTokenBtn"),
-  publishBtn: document.getElementById("publishBtn"),
   dataStatus: document.getElementById("dataStatus"),
 
   title: document.getElementById("title"),
@@ -85,45 +80,6 @@ function today() {
 
 function deepClone(value) {
   return JSON.parse(JSON.stringify(value));
-}
-
-function readSavedGithubToken() {
-  return (localStorage.getItem(GITHUB_TOKEN_KEY) || EMBEDDED_GITHUB_TOKEN || "").trim();
-}
-
-function getGithubToken() {
-  const inputToken = (dom.githubToken && dom.githubToken.value ? dom.githubToken.value : "").trim();
-  if (inputToken) {
-    return inputToken;
-  }
-
-  const savedToken = readSavedGithubToken();
-  if (savedToken && dom.githubToken) {
-    dom.githubToken.value = savedToken;
-  }
-  return savedToken;
-}
-
-function persistGithubTokenPreference() {
-  if (!dom.githubToken) return;
-
-  const token = (dom.githubToken.value || "").trim();
-  const remember = dom.rememberToken ? !!dom.rememberToken.checked : true;
-  if (remember && token) {
-    localStorage.setItem(GITHUB_TOKEN_KEY, token);
-  } else {
-    localStorage.removeItem(GITHUB_TOKEN_KEY);
-  }
-}
-
-function clearSavedGithubToken() {
-  localStorage.removeItem(GITHUB_TOKEN_KEY);
-  if (dom.githubToken) {
-    dom.githubToken.value = "";
-  }
-  if (dom.rememberToken) {
-    dom.rememberToken.checked = true;
-  }
 }
 
 function resolveGithubTarget() {
@@ -176,9 +132,9 @@ async function readGithubError(response) {
 }
 
 async function publishArticlesToGithub() {
-  const token = getGithubToken();
+  const token = (EMBEDDED_GITHUB_TOKEN || "").trim();
   if (!token) {
-    throw new Error("请先输入 GitHub Token 再发布。");
+    throw new Error("未配置发布 Token。");
   }
 
   const { owner, repo } = resolveGithubTarget();
@@ -803,23 +759,27 @@ function logout() {
 
 async function handleSubmit() {
   setError(dom.formError, "");
+  setStatus("发布中...");
 
   try {
     const article = normalizeArticle(createArticlePayload());
     const index = state.articles.findIndex((item) => item.id === article.id);
+    const actionText = index >= 0 ? "更新" : "发布";
 
     if (index >= 0) {
       state.articles.splice(index, 1, article);
-      setStatus("文章已更新（已保存到浏览器本地）");
     } else {
       state.articles.unshift(article);
-      setStatus("文章已发布（已保存到浏览器本地）");
     }
 
-    resetForm();
     await persistAndRender();
+    await publishArticlesToGithub();
+    state.defaultArticles = deepClone(state.articles);
+    resetForm();
+    setStatus(`文章已${actionText}并同步。约 20-60 秒后全员可见。`);
   } catch (err) {
     setError(dom.formError, err.message || "保存失败");
+    setStatus(`发布失败：${err.message || "未知错误"}`);
   }
 }
 
@@ -928,35 +888,7 @@ function exportArticles() {
   a.click();
   a.remove();
   URL.revokeObjectURL(url);
-  setStatus("已导出 JSON。也可直接点击“发布到 GitHub（全员可见）”自动提交。");
-}
-
-async function handlePublish() {
-  if (!state.articles.length) {
-    setStatus("当前没有可发布的数据。");
-    return;
-  }
-
-  if (dom.publishBtn) {
-    dom.publishBtn.disabled = true;
-    dom.publishBtn.textContent = "发布中...";
-  }
-  setStatus("正在发布到 GitHub...");
-
-  try {
-    await persistArticles();
-    persistGithubTokenPreference();
-    await publishArticlesToGithub();
-    state.defaultArticles = deepClone(state.articles);
-    setStatus("发布成功。GitHub Actions 正在部署，约 20-60 秒后全员可见。");
-  } catch (err) {
-    setStatus(`发布失败：${err.message || "未知错误"}`);
-  } finally {
-    if (dom.publishBtn) {
-      dom.publishBtn.disabled = false;
-      dom.publishBtn.textContent = "发布到 GitHub（全员可见）";
-    }
-  }
+  setStatus("已导出 JSON，可作为离线备份。");
 }
 
 async function restoreDefaultArticles() {
@@ -1053,22 +985,6 @@ function bindEvents() {
   dom.exportBtn.addEventListener("click", exportArticles);
   dom.importBtn.addEventListener("click", () => dom.importFile.click());
   dom.restoreBtn.addEventListener("click", restoreDefaultArticles);
-  if (dom.publishBtn) {
-    dom.publishBtn.addEventListener("click", handlePublish);
-  }
-  if (dom.clearTokenBtn) {
-    dom.clearTokenBtn.addEventListener("click", () => {
-      clearSavedGithubToken();
-      setStatus("已清除本设备保存的 GitHub Token。");
-    });
-  }
-  if (dom.rememberToken) {
-    dom.rememberToken.addEventListener("change", persistGithubTokenPreference);
-  }
-  if (dom.githubToken) {
-    dom.githubToken.addEventListener("change", persistGithubTokenPreference);
-    dom.githubToken.addEventListener("blur", persistGithubTokenPreference);
-  }
   dom.importFile.addEventListener("change", handleImportFile);
 
   dom.articleList.addEventListener("click", (event) => {
@@ -1128,7 +1044,7 @@ async function initData() {
   if (state.defaultArticles.length) {
     state.articles = deepClone(state.defaultArticles);
     await persistArticles();
-    setStatus("已加载线上数据。编辑后请点击“发布到 GitHub（全员可见）”。");
+    setStatus("已加载线上数据。编辑后点击“发布”即可全员同步。");
     return;
   }
 
@@ -1143,14 +1059,6 @@ async function initData() {
 }
 
 async function init() {
-  const savedToken = readSavedGithubToken();
-  if (savedToken && dom.githubToken) {
-    dom.githubToken.value = savedToken;
-  }
-  if (dom.rememberToken) {
-    dom.rememberToken.checked = !!savedToken || dom.rememberToken.checked;
-  }
-
   bindEvents();
   await initData();
   resetForm();

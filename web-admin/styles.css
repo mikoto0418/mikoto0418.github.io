@@ -394,39 +394,6 @@ select {
   margin: 12px 0 8px;
 }
 
-.publish-actions {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 10px;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.publish-actions .button {
-  margin-top: 0;
-}
-
-.token-actions {
-  margin-bottom: 10px;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.token-remember {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: var(--text-600);
-}
-
-.token-actions .button {
-  margin-top: 0;
-}
-
 .grid {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -543,7 +510,4 @@ select {
     gap: 12px;
   }
 
-  .publish-actions {
-    grid-template-columns: 1fr;
-  }
 }

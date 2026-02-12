@@ -12,8 +12,8 @@
 
 ## 发布流程（全员可见）
 1. 打开后台编辑内容。
-2. 在后台输入 GitHub Token（需要仓库 Contents 写入权限）。
-3. 点击“发布到 GitHub（全员可见）”。
+2. 点击“发布”（单按钮）。
+3. 系统会自动提交 `web-admin/data/articles.json` 到 GitHub。
 4. 等待 GitHub Actions 部署完成（约 20-60 秒）。
 
 ## 备用手工流程
