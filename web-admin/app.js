@@ -4,6 +4,10 @@ const ARTICLE_ROUTE_PREFIX = "/article/";
 const ADMIN_PASSWORD = "travel-admin";
 const AUTH_KEY = "travel_admin_auth";
 const LOCAL_DATA_KEY = "travel_articles_data";
+const GITHUB_DEFAULT_OWNER = "mikoto0418";
+const GITHUB_DEFAULT_REPO = "mikoto0418.github.io";
+const GITHUB_BRANCH = "main";
+const GITHUB_CONTENT_PATH = "web-admin/data/articles.json";
 const DATA_DB_NAME = "travel_admin_db";
 const DATA_DB_VERSION = 1;
 const DATA_DB_STORE = "kv";
@@ -44,6 +48,8 @@ const dom = {
   importBtn: document.getElementById("importBtn"),
   restoreBtn: document.getElementById("restoreBtn"),
   importFile: document.getElementById("importFile"),
+  githubToken: document.getElementById("githubToken"),
+  publishBtn: document.getElementById("publishBtn"),
   dataStatus: document.getElementById("dataStatus"),
 
   title: document.getElementById("title"),
@@ -74,6 +80,98 @@ function today() {
 
 function deepClone(value) {
   return JSON.parse(JSON.stringify(value));
+}
+
+function resolveGithubTarget() {
+  const host = String(window.location.hostname || "");
+  const match = host.match(/^([a-z\d-]+)\.github\.io$/i);
+  if (match && match[1]) {
+    const owner = match[1];
+    return {
+      owner,
+      repo: `${owner}.github.io`
+    };
+  }
+
+  return {
+    owner: GITHUB_DEFAULT_OWNER,
+    repo: GITHUB_DEFAULT_REPO
+  };
+}
+
+function toBase64Utf8(text) {
+  const bytes = new TextEncoder().encode(String(text || ""));
+  let binary = "";
+  const chunk = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunk) {
+    const part = bytes.slice(i, i + chunk);
+    binary += String.fromCharCode(...part);
+  }
+  return btoa(binary);
+}
+
+function createGithubHeaders(token) {
+  return {
+    Accept: "application/vnd.github+json",
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+    "X-GitHub-Api-Version": "2022-11-28"
+  };
+}
+
+async function readGithubError(response) {
+  try {
+    const data = await response.json();
+    if (data && data.message) {
+      return data.message;
+    }
+  } catch (err) {
+    // ignore
+  }
+  return `HTTP ${response.status}`;
+}
+
+async function publishArticlesToGithub() {
+  const token = (dom.githubToken && dom.githubToken.value ? dom.githubToken.value : "").trim();
+  if (!token) {
+    throw new Error("请先输入 GitHub Token 再发布。");
+  }
+
+  const { owner, repo } = resolveGithubTarget();
+  const endpoint = `https://api.github.com/repos/${owner}/${repo}/contents/${GITHUB_CONTENT_PATH}`;
+  const headers = createGithubHeaders(token);
+
+  const payload = JSON.stringify(sortArticles(state.articles), null, 2);
+  const contentBase64 = toBase64Utf8(`${payload}\n`);
+  const commitMessage = `content: publish articles ${new Date().toISOString()}`;
+
+  let sha = null;
+  const metaRes = await fetch(`${endpoint}?ref=${GITHUB_BRANCH}`, { headers });
+  if (metaRes.status === 200) {
+    const meta = await metaRes.json();
+    sha = meta.sha || null;
+  } else if (metaRes.status !== 404) {
+    throw new Error(`读取仓库文件失败：${await readGithubError(metaRes)}`);
+  }
+
+  const body = {
+    message: commitMessage,
+    content: contentBase64,
+    branch: GITHUB_BRANCH
+  };
+  if (sha) {
+    body.sha = sha;
+  }
+
+  const putRes = await fetch(endpoint, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(body)
+  });
+
+  if (!putRes.ok) {
+    throw new Error(`发布到 GitHub 失败：${await readGithubError(putRes)}`);
+  }
 }
 
 let dataDbPromise = null;
@@ -786,7 +884,34 @@ function exportArticles() {
   a.click();
   a.remove();
   URL.revokeObjectURL(url);
-  setStatus("已导出 JSON，请将文件覆盖到 web-admin/data/articles.json 并提交到 GitHub。");
+  setStatus("已导出 JSON。也可直接点击“发布到 GitHub（全员可见）”自动提交。");
+}
+
+async function handlePublish() {
+  if (!state.articles.length) {
+    setStatus("当前没有可发布的数据。");
+    return;
+  }
+
+  if (dom.publishBtn) {
+    dom.publishBtn.disabled = true;
+    dom.publishBtn.textContent = "发布中...";
+  }
+  setStatus("正在发布到 GitHub...");
+
+  try {
+    await persistArticles();
+    await publishArticlesToGithub();
+    state.defaultArticles = deepClone(state.articles);
+    setStatus("发布成功。GitHub Actions 正在部署，约 20-60 秒后全员可见。");
+  } catch (err) {
+    setStatus(`发布失败：${err.message || "未知错误"}`);
+  } finally {
+    if (dom.publishBtn) {
+      dom.publishBtn.disabled = false;
+      dom.publishBtn.textContent = "发布到 GitHub（全员可见）";
+    }
+  }
 }
 
 async function restoreDefaultArticles() {
@@ -852,14 +977,21 @@ function bindEvents() {
 
   dom.refreshBtn.addEventListener("click", async () => {
     try {
-      const local = await loadLocalArticles();
-      if (local && local.length) {
-        state.articles = local;
-        setStatus("已从浏览器本地存储刷新");
-      } else {
-        state.articles = deepClone(state.defaultArticles);
+      const latest = await loadDefaultArticles();
+      if (latest.length) {
+        state.defaultArticles = latest;
+        state.articles = deepClone(latest);
         await persistArticles();
-        setStatus("未发现本地数据，已使用默认数据");
+        setStatus("已从线上数据刷新。");
+      } else {
+        const local = await loadLocalArticles();
+        if (local && local.length) {
+          state.articles = local;
+          setStatus("线上数据不可用，已回退本地缓存。");
+        } else {
+          setStatus("刷新失败：线上和本地都没有可用数据。");
+          return;
+        }
       }
       renderFrontList();
       renderAdminList();
@@ -876,6 +1008,9 @@ function bindEvents() {
   dom.exportBtn.addEventListener("click", exportArticles);
   dom.importBtn.addEventListener("click", () => dom.importFile.click());
   dom.restoreBtn.addEventListener("click", restoreDefaultArticles);
+  if (dom.publishBtn) {
+    dom.publishBtn.addEventListener("click", handlePublish);
+  }
   dom.importFile.addEventListener("change", handleImportFile);
 
   dom.articleList.addEventListener("click", (event) => {
@@ -932,19 +1067,19 @@ function bindEvents() {
 async function initData() {
   state.defaultArticles = await loadDefaultArticles();
 
-  const local = await loadLocalArticles();
-  if (local && local.length) {
-    state.articles = local;
-    setStatus("已加载浏览器本地数据");
+  if (state.defaultArticles.length) {
+    state.articles = deepClone(state.defaultArticles);
+    await persistArticles();
+    setStatus("已加载线上数据。编辑后请点击“发布到 GitHub（全员可见）”。");
     return;
   }
 
-  state.articles = deepClone(state.defaultArticles);
-  await persistArticles();
-
-  if (state.articles.length) {
-    setStatus("已加载默认数据。后续改动会保存到浏览器本地。");
+  const local = await loadLocalArticles();
+  if (local && local.length) {
+    state.articles = local;
+    setStatus("线上数据不可用，已加载本地缓存。");
   } else {
+    state.articles = [];
     setStatus("当前无数据，请导入 JSON 或在后台新建。");
   }
 }
