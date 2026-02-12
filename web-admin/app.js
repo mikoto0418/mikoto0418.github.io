@@ -4,6 +4,7 @@ const ARTICLE_ROUTE_PREFIX = "/article/";
 const ADMIN_PASSWORD = "travel-admin";
 const AUTH_KEY = "travel_admin_auth";
 const LOCAL_DATA_KEY = "travel_articles_data";
+const GITHUB_TOKEN_KEY = "travel_github_token";
 const GITHUB_DEFAULT_OWNER = "mikoto0418";
 const GITHUB_DEFAULT_REPO = "mikoto0418.github.io";
 const GITHUB_BRANCH = "main";
@@ -49,6 +50,8 @@ const dom = {
   restoreBtn: document.getElementById("restoreBtn"),
   importFile: document.getElementById("importFile"),
   githubToken: document.getElementById("githubToken"),
+  rememberToken: document.getElementById("rememberToken"),
+  clearTokenBtn: document.getElementById("clearTokenBtn"),
   publishBtn: document.getElementById("publishBtn"),
   dataStatus: document.getElementById("dataStatus"),
 
@@ -80,6 +83,45 @@ function today() {
 
 function deepClone(value) {
   return JSON.parse(JSON.stringify(value));
+}
+
+function readSavedGithubToken() {
+  return (localStorage.getItem(GITHUB_TOKEN_KEY) || "").trim();
+}
+
+function getGithubToken() {
+  const inputToken = (dom.githubToken && dom.githubToken.value ? dom.githubToken.value : "").trim();
+  if (inputToken) {
+    return inputToken;
+  }
+
+  const savedToken = readSavedGithubToken();
+  if (savedToken && dom.githubToken) {
+    dom.githubToken.value = savedToken;
+  }
+  return savedToken;
+}
+
+function persistGithubTokenPreference() {
+  if (!dom.githubToken) return;
+
+  const token = (dom.githubToken.value || "").trim();
+  const remember = dom.rememberToken ? !!dom.rememberToken.checked : true;
+  if (remember && token) {
+    localStorage.setItem(GITHUB_TOKEN_KEY, token);
+  } else {
+    localStorage.removeItem(GITHUB_TOKEN_KEY);
+  }
+}
+
+function clearSavedGithubToken() {
+  localStorage.removeItem(GITHUB_TOKEN_KEY);
+  if (dom.githubToken) {
+    dom.githubToken.value = "";
+  }
+  if (dom.rememberToken) {
+    dom.rememberToken.checked = true;
+  }
 }
 
 function resolveGithubTarget() {
@@ -132,7 +174,7 @@ async function readGithubError(response) {
 }
 
 async function publishArticlesToGithub() {
-  const token = (dom.githubToken && dom.githubToken.value ? dom.githubToken.value : "").trim();
+  const token = getGithubToken();
   if (!token) {
     throw new Error("请先输入 GitHub Token 再发布。");
   }
@@ -901,6 +943,7 @@ async function handlePublish() {
 
   try {
     await persistArticles();
+    persistGithubTokenPreference();
     await publishArticlesToGithub();
     state.defaultArticles = deepClone(state.articles);
     setStatus("发布成功。GitHub Actions 正在部署，约 20-60 秒后全员可见。");
@@ -1011,6 +1054,19 @@ function bindEvents() {
   if (dom.publishBtn) {
     dom.publishBtn.addEventListener("click", handlePublish);
   }
+  if (dom.clearTokenBtn) {
+    dom.clearTokenBtn.addEventListener("click", () => {
+      clearSavedGithubToken();
+      setStatus("已清除本设备保存的 GitHub Token。");
+    });
+  }
+  if (dom.rememberToken) {
+    dom.rememberToken.addEventListener("change", persistGithubTokenPreference);
+  }
+  if (dom.githubToken) {
+    dom.githubToken.addEventListener("change", persistGithubTokenPreference);
+    dom.githubToken.addEventListener("blur", persistGithubTokenPreference);
+  }
   dom.importFile.addEventListener("change", handleImportFile);
 
   dom.articleList.addEventListener("click", (event) => {
@@ -1085,6 +1141,14 @@ async function initData() {
 }
 
 async function init() {
+  const savedToken = readSavedGithubToken();
+  if (savedToken && dom.githubToken) {
+    dom.githubToken.value = savedToken;
+  }
+  if (dom.rememberToken) {
+    dom.rememberToken.checked = !!savedToken || dom.rememberToken.checked;
+  }
+
   bindEvents();
   await initData();
   resetForm();
