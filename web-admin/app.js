@@ -4,6 +4,7 @@ const ARTICLE_ROUTE_PREFIX = "/article/";
 const ADMIN_PASSWORD = "travel-admin";
 const AUTH_KEY = "travel_admin_auth";
 const LOCAL_DATA_KEY = "travel_articles_data";
+const GITHUB_TOKEN_KEY = "travel_publish_token";
 const EMBEDDED_GITHUB_TOKEN =
   "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";
 const GITHUB_DEFAULT_OWNER = "mikoto0418";
@@ -82,6 +83,27 @@ function deepClone(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
+function readLocalPublishToken() {
+  return (localStorage.getItem(GITHUB_TOKEN_KEY) || "").trim();
+}
+
+function saveLocalPublishToken(token) {
+  const normalized = String(token || "").trim();
+  if (!normalized) {
+    localStorage.removeItem(GITHUB_TOKEN_KEY);
+    return;
+  }
+  localStorage.setItem(GITHUB_TOKEN_KEY, normalized);
+}
+
+function getEffectivePublishToken() {
+  const localToken = readLocalPublishToken();
+  if (localToken) {
+    return localToken;
+  }
+  return (EMBEDDED_GITHUB_TOKEN || "").trim();
+}
+
 function resolveGithubTarget() {
   const host = String(window.location.hostname || "");
   const match = host.match(/^([a-z\d-]+)\.github\.io$/i);
@@ -131,8 +153,16 @@ async function readGithubError(response) {
   return `HTTP ${response.status}`;
 }
 
-async function publishArticlesToGithub() {
-  const token = (EMBEDDED_GITHUB_TOKEN || "").trim();
+function buildAuthError(response, message) {
+  const error = new Error(message);
+  if (response && (response.status === 401 || response.status === 403)) {
+    error.code = "BAD_CREDENTIALS";
+  }
+  return error;
+}
+
+async function publishArticlesToGithub(tokenOverride) {
+  const token = String(tokenOverride || getEffectivePublishToken() || "").trim();
   if (!token) {
     throw new Error("未配置发布 Token。");
   }
@@ -151,7 +181,7 @@ async function publishArticlesToGithub() {
     const meta = await metaRes.json();
     sha = meta.sha || null;
   } else if (metaRes.status !== 404) {
-    throw new Error(`读取仓库文件失败：${await readGithubError(metaRes)}`);
+    throw buildAuthError(metaRes, `读取仓库文件失败：${await readGithubError(metaRes)}`);
   }
 
   const body = {
@@ -170,7 +200,35 @@ async function publishArticlesToGithub() {
   });
 
   if (!putRes.ok) {
-    throw new Error(`发布到 GitHub 失败：${await readGithubError(putRes)}`);
+    throw buildAuthError(putRes, `发布到 GitHub 失败：${await readGithubError(putRes)}`);
+  }
+}
+
+async function publishWithTokenFallback() {
+  try {
+    await publishArticlesToGithub();
+    return;
+  } catch (err) {
+    if (err.code !== "BAD_CREDENTIALS") {
+      throw err;
+    }
+  }
+
+  const manualToken = window.prompt(
+    "发布凭证已失效。请粘贴新的 GitHub Token（仅保存在当前浏览器，本次后继续一键发布）："
+  );
+  const candidate = String(manualToken || "").trim();
+  if (!candidate) {
+    throw new Error("发布凭证失效，且未提供新 Token。");
+  }
+
+  saveLocalPublishToken(candidate);
+
+  try {
+    await publishArticlesToGithub(candidate);
+  } catch (err) {
+    saveLocalPublishToken("");
+    throw err;
   }
 }
 
@@ -773,7 +831,7 @@ async function handleSubmit() {
     }
 
     await persistAndRender();
-    await publishArticlesToGithub();
+    await publishWithTokenFallback();
     state.defaultArticles = deepClone(state.articles);
     resetForm();
     setStatus(`文章已${actionText}并同步。约 20-60 秒后全员可见。`);
