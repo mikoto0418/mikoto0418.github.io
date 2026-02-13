@@ -23,7 +23,8 @@ const state = {
   isAdminAuthed: localStorage.getItem(AUTH_KEY) === "1",
   articles: [],
   defaultArticles: [],
-  editingId: ""
+  editingId: "",
+  publishToken: ""
 };
 
 const dom = {
@@ -198,10 +199,12 @@ async function readGithubError(response) {
 }
 
 function buildPublishError(response, message) {
+  const error = new Error(message);
   if (response && (response.status === 401 || response.status === 403)) {
-    return new Error(`Token 无效或权限不足：${message}`);
+    error.code = "BAD_CREDENTIALS";
+    error.message = `Token 无效或权限不足：${message}`;
   }
-  return new Error(message);
+  return error;
 }
 
 async function publishArticlesToGithub(token) {
@@ -247,8 +250,18 @@ async function publishArticlesToGithub(token) {
 }
 
 async function publishCurrentArticles() {
-  const token = await requestPublishToken();
-  await publishArticlesToGithub(token);
+  if (!state.publishToken) {
+    state.publishToken = await requestPublishToken();
+  }
+
+  try {
+    await publishArticlesToGithub(state.publishToken);
+  } catch (err) {
+    if (err && err.code === "BAD_CREDENTIALS") {
+      state.publishToken = "";
+    }
+    throw err;
+  }
 }
 
 let dataDbPromise = null;
@@ -829,6 +842,7 @@ function login() {
 
 function logout() {
   state.isAdminAuthed = false;
+  state.publishToken = "";
   localStorage.removeItem(AUTH_KEY);
   showLogin();
   resetForm();
