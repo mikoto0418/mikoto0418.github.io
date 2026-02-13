@@ -4,9 +4,6 @@ const ARTICLE_ROUTE_PREFIX = "/article/";
 const ADMIN_PASSWORD = "travel-admin";
 const AUTH_KEY = "travel_admin_auth";
 const LOCAL_DATA_KEY = "travel_articles_data";
-const GITHUB_TOKEN_KEY = "travel_publish_token";
-const EMBEDDED_GITHUB_TOKEN =
-  "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";
 const GITHUB_DEFAULT_OWNER = "mikoto0418";
 const GITHUB_DEFAULT_REPO = "mikoto0418.github.io";
 const GITHUB_BRANCH = "main";
@@ -83,25 +80,13 @@ function deepClone(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
-function readLocalPublishToken() {
-  return (localStorage.getItem(GITHUB_TOKEN_KEY) || "").trim();
-}
-
-function saveLocalPublishToken(token) {
+function requestPublishToken() {
+  const token = window.prompt("请输入本次发布使用的 GitHub Token：");
   const normalized = String(token || "").trim();
   if (!normalized) {
-    localStorage.removeItem(GITHUB_TOKEN_KEY);
-    return;
+    throw new Error("已取消发布：未输入 GitHub Token。");
   }
-  localStorage.setItem(GITHUB_TOKEN_KEY, normalized);
-}
-
-function getEffectivePublishToken() {
-  const localToken = readLocalPublishToken();
-  if (localToken) {
-    return localToken;
-  }
-  return (EMBEDDED_GITHUB_TOKEN || "").trim();
+  return normalized;
 }
 
 function resolveGithubTarget() {
@@ -153,23 +138,21 @@ async function readGithubError(response) {
   return `HTTP ${response.status}`;
 }
 
-function buildAuthError(response, message) {
-  const error = new Error(message);
+function buildPublishError(response, message) {
   if (response && (response.status === 401 || response.status === 403)) {
-    error.code = "BAD_CREDENTIALS";
+    return new Error(`Token 无效或权限不足：${message}`);
   }
-  return error;
+  return new Error(message);
 }
 
-async function publishArticlesToGithub(tokenOverride) {
-  const token = String(tokenOverride || getEffectivePublishToken() || "").trim();
-  if (!token) {
-    throw new Error("未配置发布 Token。");
+async function publishArticlesToGithub(token) {
+  const normalizedToken = String(token || "").trim();
+  if (!normalizedToken) {
+    throw new Error("未提供发布 Token。");
   }
-
   const { owner, repo } = resolveGithubTarget();
   const endpoint = `https://api.github.com/repos/${owner}/${repo}/contents/${GITHUB_CONTENT_PATH}`;
-  const headers = createGithubHeaders(token);
+  const headers = createGithubHeaders(normalizedToken);
 
   const payload = JSON.stringify(sortArticles(state.articles), null, 2);
   const contentBase64 = toBase64Utf8(`${payload}\n`);
@@ -181,7 +164,7 @@ async function publishArticlesToGithub(tokenOverride) {
     const meta = await metaRes.json();
     sha = meta.sha || null;
   } else if (metaRes.status !== 404) {
-    throw buildAuthError(metaRes, `读取仓库文件失败：${await readGithubError(metaRes)}`);
+    throw buildPublishError(metaRes, `读取仓库文件失败：${await readGithubError(metaRes)}`);
   }
 
   const body = {
@@ -200,36 +183,13 @@ async function publishArticlesToGithub(tokenOverride) {
   });
 
   if (!putRes.ok) {
-    throw buildAuthError(putRes, `发布到 GitHub 失败：${await readGithubError(putRes)}`);
+    throw buildPublishError(putRes, `发布到 GitHub 失败：${await readGithubError(putRes)}`);
   }
 }
 
-async function publishWithTokenFallback() {
-  try {
-    await publishArticlesToGithub();
-    return;
-  } catch (err) {
-    if (err.code !== "BAD_CREDENTIALS") {
-      throw err;
-    }
-  }
-
-  const manualToken = window.prompt(
-    "发布凭证已失效。请粘贴新的 GitHub Token（仅保存在当前浏览器，本次后继续一键发布）："
-  );
-  const candidate = String(manualToken || "").trim();
-  if (!candidate) {
-    throw new Error("发布凭证失效，且未提供新 Token。");
-  }
-
-  saveLocalPublishToken(candidate);
-
-  try {
-    await publishArticlesToGithub(candidate);
-  } catch (err) {
-    saveLocalPublishToken("");
-    throw err;
-  }
+async function publishCurrentArticles() {
+  const token = requestPublishToken();
+  await publishArticlesToGithub(token);
 }
 
 let dataDbPromise = null;
@@ -831,7 +791,7 @@ async function handleSubmit() {
     }
 
     await persistAndRender();
-    await publishWithTokenFallback();
+    await publishCurrentArticles();
     state.defaultArticles = deepClone(state.articles);
     resetForm();
     setStatus(`文章已${actionText}并同步。约 20-60 秒后全员可见。`);

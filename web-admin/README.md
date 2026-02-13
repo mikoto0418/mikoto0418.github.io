@@ -13,8 +13,8 @@
 ## 发布流程（全员可见）
 1. 打开后台编辑内容。
 2. 点击“发布”（单按钮）。
-3. 系统会自动提交 `web-admin/data/articles.json` 到 GitHub。
-4. 若提示 `Bad credentials`，会弹窗让你输入新 Token（仅保存在当前浏览器，后续仍是一键发布）。
+3. 每次都会弹窗要求输入 GitHub Token（不会保存到浏览器）。
+4. 系统会自动提交 `web-admin/data/articles.json` 到 GitHub。
 5. 等待 GitHub Actions 部署完成（约 20-60 秒）。
 
 ## 备用手工流程
