@@ -95,6 +95,46 @@ code {
   display: none;
 }
 
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(8, 20, 48, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-card {
+  width: min(480px, 100%);
+  background: #fff;
+  border: 1px solid #dce8ff;
+  border-radius: 18px;
+  padding: 22px 20px 18px;
+  box-shadow: 0 22px 40px rgba(8, 20, 48, 0.22);
+}
+
+.modal-card h3 {
+  margin: 0 0 10px;
+  font-size: 20px;
+}
+
+.modal-card .muted {
+  margin-bottom: 14px;
+}
+
+.modal-actions {
+  margin-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-actions .button {
+  margin-top: 0;
+}
+
 .section-head {
   margin-bottom: 18px;
 }

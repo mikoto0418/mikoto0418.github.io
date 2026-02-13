@@ -65,8 +65,16 @@ const dom = {
   submitBtn: document.getElementById("submitBtn"),
   resetBtn: document.getElementById("resetBtn"),
   formError: document.getElementById("formError"),
-  articleList: document.getElementById("articleList")
+  articleList: document.getElementById("articleList"),
+
+  tokenModal: document.getElementById("tokenModal"),
+  tokenInput: document.getElementById("tokenInput"),
+  tokenError: document.getElementById("tokenError"),
+  tokenCancelBtn: document.getElementById("tokenCancelBtn"),
+  tokenConfirmBtn: document.getElementById("tokenConfirmBtn")
 };
+
+let tokenDialogPending = null;
 
 function today() {
   const d = new Date();
@@ -80,13 +88,64 @@ function deepClone(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
-function requestPublishToken() {
-  const token = window.prompt("请输入本次发布使用的 GitHub Token：");
-  const normalized = String(token || "").trim();
-  if (!normalized) {
-    throw new Error("已取消发布：未输入 GitHub Token。");
+function closeTokenDialog() {
+  if (!dom.tokenModal) return;
+  dom.tokenModal.classList.add("hidden");
+}
+
+function failTokenDialog(message) {
+  if (!tokenDialogPending) return;
+  const { reject } = tokenDialogPending;
+  tokenDialogPending = null;
+  closeTokenDialog();
+  reject(new Error(message || "已取消发布：未输入 GitHub Token。"));
+}
+
+function resolveTokenDialog(token) {
+  if (!tokenDialogPending) return;
+  const { resolve } = tokenDialogPending;
+  tokenDialogPending = null;
+  closeTokenDialog();
+  resolve(token);
+}
+
+function confirmTokenDialog() {
+  const value = String(dom.tokenInput && dom.tokenInput.value ? dom.tokenInput.value : "").trim();
+  if (!value) {
+    setError(dom.tokenError, "请输入 GitHub Token");
+    if (dom.tokenInput) {
+      dom.tokenInput.focus();
+    }
+    return;
   }
-  return normalized;
+  setError(dom.tokenError, "");
+  if (dom.tokenInput) {
+    dom.tokenInput.value = "";
+  }
+  resolveTokenDialog(value);
+}
+
+function requestPublishToken() {
+  if (!dom.tokenModal || !dom.tokenInput || !dom.tokenConfirmBtn || !dom.tokenCancelBtn) {
+    const token = window.prompt("请输入本次发布使用的 GitHub Token：");
+    const normalized = String(token || "").trim();
+    if (!normalized) {
+      throw new Error("已取消发布：未输入 GitHub Token。");
+    }
+    return Promise.resolve(normalized);
+  }
+
+  if (tokenDialogPending) {
+    return Promise.reject(new Error("已有发布请求正在等待 Token。"));
+  }
+
+  return new Promise((resolve, reject) => {
+    tokenDialogPending = { resolve, reject };
+    setError(dom.tokenError, "");
+    dom.tokenInput.value = "";
+    dom.tokenModal.classList.remove("hidden");
+    dom.tokenInput.focus();
+  });
 }
 
 function resolveGithubTarget() {
@@ -188,7 +247,7 @@ async function publishArticlesToGithub(token) {
 }
 
 async function publishCurrentArticles() {
-  const token = requestPublishToken();
+  const token = await requestPublishToken();
   await publishArticlesToGithub(token);
 }
 
@@ -1004,6 +1063,33 @@ function bindEvents() {
   dom.importBtn.addEventListener("click", () => dom.importFile.click());
   dom.restoreBtn.addEventListener("click", restoreDefaultArticles);
   dom.importFile.addEventListener("change", handleImportFile);
+  if (dom.tokenConfirmBtn) {
+    dom.tokenConfirmBtn.addEventListener("click", confirmTokenDialog);
+  }
+  if (dom.tokenCancelBtn) {
+    dom.tokenCancelBtn.addEventListener("click", () => {
+      failTokenDialog("已取消发布：未输入 GitHub Token。");
+    });
+  }
+  if (dom.tokenModal) {
+    dom.tokenModal.addEventListener("click", (event) => {
+      if (event.target === dom.tokenModal) {
+        failTokenDialog("已取消发布：未输入 GitHub Token。");
+      }
+    });
+  }
+  if (dom.tokenInput) {
+    dom.tokenInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        confirmTokenDialog();
+      }
+      if (event.key === "Escape") {
+        event.preventDefault();
+        failTokenDialog("已取消发布：未输入 GitHub Token。");
+      }
+    });
+  }
 
   dom.articleList.addEventListener("click", (event) => {
     const button = event.target.closest("button[data-action][data-id]");
@@ -1050,6 +1136,11 @@ function bindEvents() {
   window.addEventListener("hashchange", renderRoute);
 
   document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && tokenDialogPending) {
+      event.preventDefault();
+      failTokenDialog("已取消发布：未输入 GitHub Token。");
+      return;
+    }
     if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "a") {
       window.location.hash = `#${ADMIN_ROUTE}`;
     }

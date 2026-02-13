@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>旅安指南</title>
-    <link rel="stylesheet" href="./styles.css?v=20260211-1" />
+    <link rel="stylesheet" href="./styles.css?v=20260213-1" />
   </head>
   <body>
     <div class="bg-orb orb-1"></div>
@@ -168,6 +168,20 @@
       </section>
     </main>
 
-    <script src="./app.js?v=20260211-1"></script>
+    <div id="tokenModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="tokenModalTitle">
+      <div class="modal-card">
+        <h3 id="tokenModalTitle">输入发布 Token</h3>
+        <p class="muted">本次发布需要 GitHub Token（仅本次使用，不会保存）。</p>
+        <label class="label" for="tokenInput">GitHub Token</label>
+        <input id="tokenInput" class="input" type="password" autocomplete="off" placeholder="github_pat_xxx..." />
+        <div id="tokenError" class="error"></div>
+        <div class="modal-actions">
+          <button id="tokenCancelBtn" class="button" type="button">取消</button>
+          <button id="tokenConfirmBtn" class="button primary" type="button">确认发布</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="./app.js?v=20260213-1"></script>
   </body>
 </html>
