@@ -191,7 +191,7 @@
       },
       {
         "type": "paragraph",
-        "text": "第四类：过敏&皮肤类"
+        "text": "第四类：过敏或皮肤类"
       },
       {
         "type": "paragraph",
@@ -211,7 +211,7 @@
       },
       {
         "type": "paragraph",
-        "text": "第五类：晕车&日常应急"
+        "text": "第五类：晕车或日常应急"
       },
       {
         "type": "paragraph",
@@ -266,8 +266,8 @@
         "text": "⑶应急联系卡（姓名、过敏史、紧急联系人）"
       }
     ],
-    "contentHtml": "第一类：外伤处理（核心必备）<div>⑴防水创可贴（多种尺寸：普通、加宽、关节型）</div><div>⑵无菌纱布块、医用胶带</div><div>⑶碘伏消毒棉片/酒精棉片</div><div>⑷一次性医用手套</div><div>⑸小剪刀+医用镊子</div><div>⑹止血带（自驾/户外必备）</div><div>⑺医用碘伏消毒液（小瓶装）</div><div>⑻烫伤膏（短途可选）</div><div>&nbsp;</div><div>第二类：感冒发热类</div><div>&nbsp;</div><div>⑴布洛芬/对乙酰氨基酚（退烧、止痛）</div><div>⑵复方感冒灵/感冒颗粒</div><div>⑶润喉糖/咽喉喷雾</div><div>&nbsp;</div><div>第三类：肠胃不适类</div><div>&nbsp;</div><div>⑴蒙脱石散（止泻）</div><div>⑵口服补液盐（防脱水）</div><div>⑶健胃消食片</div><div>⑷奥美拉唑（胃痛、反酸）</div><div>&nbsp;</div><div>第四类：过敏&amp;皮肤类</div><div>&nbsp;</div><div>⑴氯雷他定/西替利嗪（抗过敏）</div><div>⑵蚊虫叮咬膏/清凉油</div><div>⑶炉甘石洗剂（止痒、湿疹）</div><div>⑷抗菌软膏</div><div>&nbsp;</div><div>第五类：晕车&amp;日常应急</div><div>&nbsp;</div><div>⑴晕车药/晕车贴</div><div>⑵体温计（电子便携款）</div><div>⑶便携口罩</div><div>⑷一次性消毒湿巾</div><div>⑸应急暖宝宝（冬季）</div><div>&nbsp;</div><div>第六类：特殊人群补充</div><div>&nbsp;</div><div>⑴高血压/糖尿病常备药（足量携带）</div><div>⑵女性卫生用品、痛经药</div><div>⑶儿童专用退烧药、退热贴</div><div>&nbsp;</div><div>第七类：收纳与防护</div><div>&nbsp;</div><div>⑴防水便携急救包</div><div>⑵药品分类标签</div><div>⑶应急联系卡（姓名、过敏史、紧急联系人）</div>",
-    "warningHtml": "&nbsp;<div>1.&nbsp;药品禁忌：退烧药、肠胃药、抗过敏药请勿叠加服用，提前确认个人过敏史。</div><div>2.&nbsp;携带规范：乘坐飞机时，液体药品、喷雾类物品需符合民航规定，建议托运或保留处方。</div><div>3.&nbsp;时效管理：出发前检查药品有效期，过期药品立即更换。</div><div>4.&nbsp;应急边界：本急救包仅用于临时应急，出现严重外伤、高烧不退、剧烈腹痛、呼吸困难等情况，必须立即就医。</div><div>5.&nbsp;境外出行：提前了解目的地药品管制政策，部分处方药需携带英文处方。</div><div>6.&nbsp;儿童安全：药品务必放置在儿童无法接触的位置，避免误服。</div>",
+    "contentHtml": "<b>第一类：外伤处理（核心必备）</b><div>⑴防水创可贴（多种尺寸：普通、加宽、关节型）</div><div>⑵无菌纱布块、医用胶带</div><div>⑶碘伏消毒棉片/酒精棉片</div><div>⑷一次性医用手套</div><div>⑸小剪刀+医用镊子</div><div>⑹止血带（自驾/户外必备）</div><div>⑺医用碘伏消毒液（小瓶装）</div><div>⑻烫伤膏（短途可选）</div><div>&nbsp;</div><div><b>第二类：感冒发热类</b></div><div>&nbsp;</div><div>⑴布洛芬/对乙酰氨基酚（退烧、止痛）</div><div>⑵复方感冒灵/感冒颗粒</div><div>⑶润喉糖/咽喉喷雾</div><div>&nbsp;</div><div><b>第三类：肠胃不适类</b></div><div>&nbsp;</div><div>⑴蒙脱石散（止泻）</div><div>⑵口服补液盐（防脱水）</div><div>⑶健胃消食片</div><div>⑷奥美拉唑（胃痛、反酸）</div><div>&nbsp;</div><div><b>第四类：过敏或皮肤类</b></div><div>&nbsp;</div><div>⑴氯雷他定/西替利嗪（抗过敏）</div><div>⑵蚊虫叮咬膏/清凉油</div><div>⑶炉甘石洗剂（止痒、湿疹）</div><div>⑷抗菌软膏</div><div>&nbsp;</div><div><b>第五类：晕车或日常应急</b></div><div>&nbsp;</div><div>⑴晕车药/晕车贴</div><div>⑵体温计（电子便携款）</div><div>⑶便携口罩</div><div>⑷一次性消毒湿巾</div><div>⑸应急暖宝宝（冬季）</div><div>&nbsp;</div><div><b>第六类：特殊人群补充</b></div><div>&nbsp;</div><div>⑴高血压/糖尿病常备药（足量携带）</div><div>⑵女性卫生用品、痛经药</div><div>⑶儿童专用退烧药、退热贴</div><div>&nbsp;</div><div><b>第七类：收纳与防护</b></div><div>&nbsp;</div><div>⑴防水便携急救包</div><div>⑵药品分类标签</div><div>⑶应急联系卡（姓名、过敏史、紧急联系人）</div>",
+    "warningHtml": "<span style=\"color: var(--text-900);\"><b>1.&nbsp;药品禁忌：</b>退烧药、肠胃药、抗过敏药请勿叠加服用，提前确认个人过敏史。</span><div><b>2.&nbsp;携带规范：</b>乘坐飞机时，液体药品、喷雾类物品需符合民航规定，建议托运或保留处方。</div><div><b>3.&nbsp;时效管理：</b>出发前检查药品有效期，过期药品立即更换。</div><div><b>4.&nbsp;应急边界：</b>本急救包仅用于临时应急，出现严重外伤、高烧不退、剧烈腹痛、呼吸困难等情况，必须立即就医。</div><div><b>5.&nbsp;境外出行：</b>提前了解目的地药品管制政策，部分处方药需携带英文处方。</div><div><b>6.&nbsp;儿童安全：</b>药品务必放置在儿童无法接触的位置，避免误服。</div>",
     "sources": [
       "1. 国家卫生健康委《公民出行健康应急指南》",
       "2. 中国红十字会《家庭&旅行急救标准配置清单》",
