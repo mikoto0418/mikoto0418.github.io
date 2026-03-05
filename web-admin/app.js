@@ -56,6 +56,7 @@ const dom = {
   dataStatus: document.getElementById("dataStatus"),
 
   title: document.getElementById("title"),
+  readCount: document.getElementById("readCount"),
   summary: document.getElementById("summary"),
   publishTime: document.getElementById("publishTime"),
   riskLevel: document.getElementById("riskLevel"),
@@ -519,6 +520,15 @@ function normalizeRiskLevel(level) {
   return Object.prototype.hasOwnProperty.call(RISK_LABEL_MAP, level) ? level : "medium";
 }
 
+function normalizeReadCount(value, fallback = 0) {
+  const next = Number(value);
+  if (!Number.isFinite(next)) {
+    const backup = Number(fallback);
+    return Number.isFinite(backup) ? Math.max(0, Math.floor(backup)) : 0;
+  }
+  return Math.max(0, Math.floor(next));
+}
+
 function normalizeArticle(input, index = 0) {
   const source = input || {};
   const id = String(source.id || source._id || `a_${Date.now()}_${index}`);
@@ -530,7 +540,7 @@ function normalizeArticle(input, index = 0) {
   const publishTime = String(source.publishTime || today()).slice(0, 10);
   const riskLevel = normalizeRiskLevel(source.riskLevel);
   const cover = String(source.cover || "").trim();
-  const readCount = Number(source.readCount) || 0;
+  const readCount = normalizeReadCount(source.readCount);
 
   const warningHtml = typeof source.warningHtml === "string" ? source.warningHtml.trim() : "";
   const warningText = String(stripHtml(warningHtml) || source.warning || "").trim();
@@ -685,6 +695,7 @@ function showAdmin() {
 }
 
 function resetForm() {
+  dom.readCount.value = "0";
   dom.title.value = "";
   setFieldValue(dom.summary, "", "");
   dom.publishTime.value = today();
@@ -858,6 +869,7 @@ function getArticleById(articleId) {
 }
 
 function fillForm(article) {
+  dom.readCount.value = String(normalizeReadCount(article.readCount));
   dom.title.value = article.title || "";
   setFieldValue(dom.summary, article.summaryHtml, article.summary || "");
   dom.publishTime.value = article.publishTime || today();
@@ -886,6 +898,8 @@ async function persistAndRender() {
 }
 
 function createArticlePayload() {
+  const previous = state.editingId ? getArticleById(state.editingId) : null;
+  const readCount = normalizeReadCount(dom.readCount.value, previous ? previous.readCount : 0);
   const title = dom.title.value.trim();
   const summaryText = getFieldText(dom.summary);
   const summaryHtml = getFieldHtml(dom.summary);
@@ -900,8 +914,6 @@ function createArticlePayload() {
     throw new Error("标题和摘要为必填项");
   }
 
-  const previous = state.editingId ? getArticleById(state.editingId) : null;
-
   return {
     id: state.editingId || `a_${Date.now()}`,
     title,
@@ -915,7 +927,7 @@ function createArticlePayload() {
     sources: splitLines(sourcesText),
     sourcesHtml,
     cover: dom.coverUrl.value.trim(),
-    readCount: previous ? Number(previous.readCount) || 0 : 0
+    readCount
   };
 }
 
