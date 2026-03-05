@@ -8,6 +8,10 @@ const GITHUB_DEFAULT_OWNER = "mikoto0418";
 const GITHUB_DEFAULT_REPO = "mikoto0418.github.io";
 const GITHUB_BRANCH = "main";
 const GITHUB_CONTENT_PATH = "web-admin/data/articles.json";
+const GITHUB_PAGES_WORKFLOW_FILE = "pages.yml";
+const ACTIONS_POLL_INTERVAL_MS = 4000;
+const ACTIONS_POLL_TIMEOUT_MS = 3 * 60 * 1000;
+const ACTIONS_QUERY_LIMIT = 20;
 const DATA_DB_NAME = "travel_admin_db";
 const DATA_DB_VERSION = 1;
 const DATA_DB_STORE = "kv";
@@ -207,6 +211,78 @@ function buildPublishError(response, message) {
   return error;
 }
 
+function sleep(ms) {
+  return new Promise((resolve) => window.setTimeout(resolve, ms));
+}
+
+function buildActionsRunUrl(owner, repo, runId) {
+  if (!runId) return "";
+  return `https://github.com/${owner}/${repo}/actions/runs/${runId}`;
+}
+
+async function fetchPagesWorkflowRuns(token, owner, repo) {
+  const headers = createGithubHeaders(token);
+  const workflowFile = encodeURIComponent(GITHUB_PAGES_WORKFLOW_FILE);
+  const endpoint =
+    `https://api.github.com/repos/${owner}/${repo}/actions/workflows/${workflowFile}/runs` +
+    `?branch=${encodeURIComponent(GITHUB_BRANCH)}&event=push&per_page=${ACTIONS_QUERY_LIMIT}`;
+
+  const res = await fetch(endpoint, { headers });
+  if (!res.ok) {
+    throw buildPublishError(res, `查询 Actions 失败：${await readGithubError(res)}`);
+  }
+
+  const data = await res.json();
+  return Array.isArray(data.workflow_runs) ? data.workflow_runs : [];
+}
+
+async function waitForPagesDeployment(token, publishMeta) {
+  const startedAt = Date.now();
+  const commitSha = String((publishMeta && publishMeta.commitSha) || "").trim();
+  const owner = publishMeta && publishMeta.owner ? publishMeta.owner : GITHUB_DEFAULT_OWNER;
+  const repo = publishMeta && publishMeta.repo ? publishMeta.repo : GITHUB_DEFAULT_REPO;
+
+  if (!commitSha) {
+    throw new Error("无法获取本次提交 SHA，不能自动跟踪部署。");
+  }
+
+  while (Date.now() - startedAt < ACTIONS_POLL_TIMEOUT_MS) {
+    const runs = await fetchPagesWorkflowRuns(token, owner, repo);
+    const run = runs.find((item) => String((item && item.head_sha) || "") === commitSha);
+
+    if (run) {
+      const status = String(run.status || "");
+      if (status === "completed") {
+        const conclusion = String(run.conclusion || "");
+        if (conclusion === "success") {
+          return run;
+        }
+
+        const detailsUrl = run.html_url || buildActionsRunUrl(owner, repo, run.id);
+        throw new Error(`Pages 部署失败（${conclusion || "unknown"}）。详情：${detailsUrl || "无"}`);
+      }
+    }
+
+    await sleep(ACTIONS_POLL_INTERVAL_MS);
+  }
+
+  throw new Error("3 分钟内未检测到部署完成，请到 Actions 页面查看。");
+}
+
+async function notifyDeploymentResult(actionText, publishMeta) {
+  setStatus(`文章已${actionText}并同步到 GitHub，正在检测 Pages 部署状态...`);
+  try {
+    const run = await waitForPagesDeployment(state.publishToken, publishMeta);
+    const detailsUrl =
+      (run && run.html_url) ||
+      buildActionsRunUrl(publishMeta.owner, publishMeta.repo, run && run.id);
+    const suffix = detailsUrl ? ` 详情：${detailsUrl}` : "";
+    setStatus(`文章已${actionText}并完成部署。${suffix}`);
+  } catch (err) {
+    setStatus(`文章已${actionText}并同步到 GitHub，但部署状态检测失败：${err.message || "未知错误"}`);
+  }
+}
+
 async function publishArticlesToGithub(token) {
   const normalizedToken = String(token || "").trim();
   if (!normalizedToken) {
@@ -247,6 +323,19 @@ async function publishArticlesToGithub(token) {
   if (!putRes.ok) {
     throw buildPublishError(putRes, `发布到 GitHub 失败：${await readGithubError(putRes)}`);
   }
+
+  let putData = null;
+  try {
+    putData = await putRes.json();
+  } catch (err) {
+    // ignore json parse failure
+  }
+
+  return {
+    owner,
+    repo,
+    commitSha: (putData && putData.commit && putData.commit.sha) || ""
+  };
 }
 
 async function publishCurrentArticles() {
@@ -255,7 +344,7 @@ async function publishCurrentArticles() {
   }
 
   try {
-    await publishArticlesToGithub(state.publishToken);
+    return await publishArticlesToGithub(state.publishToken);
   } catch (err) {
     if (err && err.code === "BAD_CREDENTIALS") {
       state.publishToken = "";
@@ -864,10 +953,10 @@ async function handleSubmit() {
     }
 
     await persistAndRender();
-    await publishCurrentArticles();
+    const publishMeta = await publishCurrentArticles();
     state.defaultArticles = deepClone(state.articles);
     resetForm();
-    setStatus(`文章已${actionText}并同步。约 20-60 秒后全员可见。`);
+    await notifyDeploymentResult(actionText, publishMeta);
   } catch (err) {
     setError(dom.formError, err.message || "保存失败");
     setStatus(`发布失败：${err.message || "未知错误"}`);
@@ -880,9 +969,15 @@ async function handleDelete(articleId) {
   }
 
   try {
+    const beforeCount = state.articles.length;
     state.articles = state.articles.filter((item) => item.id !== articleId);
+
+    if (state.articles.length === beforeCount) {
+      setStatus("文章不存在或已删除。请刷新后重试。");
+      return;
+    }
+
     await persistAndRender();
-    setStatus("文章已删除（已保存到浏览器本地）");
 
     if (state.editingId === articleId) {
       resetForm();
@@ -891,6 +986,14 @@ async function handleDelete(articleId) {
     const route = parseRoute();
     if (route.name === "detail" && route.id === articleId) {
       window.location.hash = "#/";
+    }
+
+    try {
+      const publishMeta = await publishCurrentArticles();
+      state.defaultArticles = deepClone(state.articles);
+      await notifyDeploymentResult("删除", publishMeta);
+    } catch (err) {
+      setStatus(`文章已删除并保存到本地，但同步失败：${err.message || "未知错误"}`);
     }
   } catch (err) {
     setStatus(`删除失败：${err.message || "未知错误"}`);
