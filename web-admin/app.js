@@ -296,46 +296,57 @@ async function publishArticlesToGithub(token) {
   const contentBase64 = toBase64Utf8(`${payload}\n`);
   const commitMessage = `content: publish articles ${new Date().toISOString()}`;
 
-  let sha = null;
-  const metaRes = await fetch(`${endpoint}?ref=${GITHUB_BRANCH}`, { headers });
-  if (metaRes.status === 200) {
-    const meta = await metaRes.json();
-    sha = meta.sha || null;
-  } else if (metaRes.status !== 404) {
-    throw buildPublishError(metaRes, `读取仓库文件失败：${await readGithubError(metaRes)}`);
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    let sha = null;
+    const metaRes = await fetch(`${endpoint}?ref=${GITHUB_BRANCH}`, { headers });
+    if (metaRes.status === 200) {
+      const meta = await metaRes.json();
+      sha = meta.sha || null;
+    } else if (metaRes.status !== 404) {
+      throw buildPublishError(metaRes, `读取仓库文件失败：${await readGithubError(metaRes)}`);
+    }
+
+    const body = {
+      message: commitMessage,
+      content: contentBase64,
+      branch: GITHUB_BRANCH
+    };
+    if (sha) {
+      body.sha = sha;
+    }
+
+    const putRes = await fetch(endpoint, {
+      method: "PUT",
+      headers,
+      body: JSON.stringify(body)
+    });
+
+    if (putRes.ok) {
+      let putData = null;
+      try {
+        putData = await putRes.json();
+      } catch (err) {
+        // ignore json parse failure
+      }
+
+      return {
+        owner,
+        repo,
+        commitSha: (putData && putData.commit && putData.commit.sha) || ""
+      };
+    }
+
+    const errorText = await readGithubError(putRes);
+    const isShaConflict = putRes.status === 409 && /does not match/i.test(errorText);
+    if (isShaConflict && attempt === 0) {
+      await sleep(300);
+      continue;
+    }
+
+    throw buildPublishError(putRes, `发布到 GitHub 失败：${errorText}`);
   }
 
-  const body = {
-    message: commitMessage,
-    content: contentBase64,
-    branch: GITHUB_BRANCH
-  };
-  if (sha) {
-    body.sha = sha;
-  }
-
-  const putRes = await fetch(endpoint, {
-    method: "PUT",
-    headers,
-    body: JSON.stringify(body)
-  });
-
-  if (!putRes.ok) {
-    throw buildPublishError(putRes, `发布到 GitHub 失败：${await readGithubError(putRes)}`);
-  }
-
-  let putData = null;
-  try {
-    putData = await putRes.json();
-  } catch (err) {
-    // ignore json parse failure
-  }
-
-  return {
-    owner,
-    repo,
-    commitSha: (putData && putData.commit && putData.commit.sha) || ""
-  };
+  throw new Error("发布失败：发生未知冲突，请稍后重试。");
 }
 
 async function publishCurrentArticles() {
